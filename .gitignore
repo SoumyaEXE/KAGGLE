@@ -1,1 +1,42 @@
+# ---- secrets: never commit ----
+.env
+**/.env
+kaggle.json
+*.pem
+
+# ---- local-only notes ----
 /Is This Still the Test Kaggle Benchmark Build Spec.md
+
+# ---- Python / tooling ----
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# ---- raw Kaggle downloads (~160 MB; re-fetch with `kaggle b t download <task> -o results/raw`) ----
+is-this-still-the-test/results/raw/
+
+# ---- mock data used only while developing the analysis ----
+is-this-still-the-test/results/*MOCK*
+is-this-still-the-test/figures/MOCK/
+
+# ---- generated charts and images (rebuild with the scripts; see README) ----
+is-this-still-the-test/figures/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
+# ---- blog drafts, screenshots and the web write-up (published on DEV, not in the repo) ----
+is-this-still-the-test/post/
+
+# ---- paper build by-products (the paper sources and final PDF are kept) ----
+is-this-still-the-test/paper/*.aux
+is-this-still-the-test/paper/*.log
+is-this-still-the-test/paper/*.out
+is-this-still-the-test/paper/*.bbl
+is-this-still-the-test/paper/*.blg
+is-this-still-the-test/paper/*.synctex.gz

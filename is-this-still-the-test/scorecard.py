@@ -154,38 +154,54 @@ def fig_scorecard(res, out):
 
 
 def fig_leaderboard(res, out):
+    """Decomposed leaderboard: each bar = overall score built from its three equal-weight parts,
+    with the story-bootstrap 95% interval on top and P(rank 1) in a side panel."""
     tab = res["table"][::-1]
     n = len(tab)
-    fig, ax = plt.subplots(figsize=(9.6, 0.42 * n + 2.1))
-    median = sorted(t["overall"] for t in tab)[n // 2]
-    ax.axvline(median, color=A.MUTED, lw=0.9, ls=(0, (4, 3)), zorder=1)
-    ax.text(median + 0.8, n - 0.45, "median model", fontsize=7.8, color=A.MUTED, va="center")
+    parts = [("detection", "reality detection", A.ORANGE), ("escalation", "escalation", A.AQUA),
+             ("uptake", "instruction uptake", A.BLUE)]
+    fig, (ax, px) = plt.subplots(1, 2, figsize=(10.2, 0.38 * n + 2.3), sharey=True,
+                                 gridspec_kw={"width_ratios": [5.2, 1], "wspace": 0.06})
     for i, t in enumerate(tab):
+        left = 0.0
+        for k, _, c in parts:
+            w = t[k] / 3
+            ax.barh(i, w, left=left, color=c, height=0.62, edgecolor=A.SURFACE, linewidth=0.6, zorder=2)
+            left += w
         lo, hi = t["ci"]["overall"]
-        first = t["rank"] == 1
-        c = A.ORANGE if t["p_first"] > 0 else A.INK2
-        ax.plot([lo, hi], [i, i], color=c, lw=1.5, zorder=2)
-        ax.plot([t["overall"]], [i], marker="s" if first else "o", ms=7 if first else 5.5, color=c, zorder=3, ls="none")
-        ax.text(hi + 1.2, i, f"{t['overall']:.0f}", va="center", fontsize=8.8, color=A.INK if first else A.INK2)
-        ax.text(104, i, f"{100 * t['p_first']:.0f}%" if t["p_first"] >= 0.005 else "–", va="center", ha="left",
-                fontsize=9, color=A.INK if t["p_first"] >= 0.1 else A.MUTED)
-    ax.text(104, n - 0.45, "P(rank 1)", fontsize=8.3, color=A.MUTED, ha="left", va="center")
-    ax.set_yticks(range(n), [f"{t['rank']}.  {t['model']}" for t in tab])
-    ax.tick_params(axis="y", length=0, labelsize=9.8, labelcolor=A.INK)
-    ax.set_xlim(-2, 102)
-    ax.set_ylim(-0.7, n - 0.1)
-    ax.set_xlabel("Overall scorecard score (0–100)")
+        ax.plot([lo, hi], [i, i], color=A.INK, lw=1.0, zorder=4)
+        for e in (lo, hi):
+            ax.plot([e, e], [i - 0.13, i + 0.13], color=A.INK, lw=1.0, zorder=4)
+        ax.text(max(hi, t["overall"]) + 1.6, i, f"{t['overall']:.0f}", va="center", fontsize=8.8,
+                color=A.INK if t["rank"] <= 2 else A.INK2)
+        px.barh(i, t["p_first"], color=A.INK2 if t["p_first"] > 0 else A.STONE, height=0.5, zorder=2)
+        if t["p_first"] >= 0.005:
+            px.text(t["p_first"] + 0.04, i, f"{t['p_first']:.0%}", va="center", fontsize=8.3, color=A.INK)
+    ax.set_yticks(range(n), [t["model"] for t in tab])
+    ax.tick_params(axis="y", length=0, labelsize=9.6, labelcolor=A.INK)
+    ax.set_xlim(0, 100)
+    ax.set_ylim(-0.7, n - 0.3)
+    ax.set_xlabel("Overall score (0–100) = sum of the three parts")
     ax.grid(axis="y", visible=False)
     ax.spines["left"].set_visible(False)
-    A.finish(fig, ax, f"Round {res['round']} leaderboard",
-             "Who handles a real-looking credential best? Point = overall score, line = 95% interval.",
-             out, source=False)
-    img = plt.imread(out)
-    fig = plt.figure(figsize=(img.shape[1] / 220, img.shape[0] / 220 + 0.42))
-    fig.figimage(img, 0, int(0.42 * 220))
-    fig.text(0.012, 0.045, f"Intervals and P(rank 1): paired bootstrap over the 6 stories, {res['draws']} resamples. "
-             "Orange = ranked first in at least one resample.", fontsize=7.8, color=A.INK2)
-    fig.text(0.012, 0.012, A.SOURCE.strip(), fontsize=7.8, color=A.MUTED)
+    px.set_xlim(0, 1.25)
+    px.set_xticks([0, 1], ["0", "100%"])
+    px.set_xlabel("P(rank 1)")
+    px.grid(axis="y", visible=False)
+    px.spines["left"].set_visible(False)
+    px.tick_params(axis="y", length=0)
+    from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
+    handles = [Patch(color=c, label=lab) for _, lab, c in parts] + [
+        Line2D([], [], color=A.INK, lw=1, marker="|", ms=8, label="95% interval")]
+    fig.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.01, 1 - 0.42 / fig.get_size_inches()[1]), ncol=4, fontsize=8.6,
+               handlelength=1.4, columnspacing=1.5)
+    fig.suptitle(f"Round {res['round']} leaderboard, decomposed", x=0.01, ha="left", fontsize=12.5, y=0.99)
+    fig.text(0.01, 0.03, f"Each part is one sub-benchmark (0–100) divided by 3. Intervals and P(rank 1): paired "
+             f"bootstrap over the 6 stories, {res['draws']} resamples.", fontsize=8.2, color=A.INK2)
+    fig.text(0.01, 0.006, A.SOURCE.strip(), fontsize=7.8, color=A.MUTED)
+    h = fig.get_size_inches()[1]
+    fig.subplots_adjust(left=0.19, right=0.985, top=1 - 1.15 / h, bottom=0.95 / h)
     fig.savefig(out, dpi=220)
     plt.close(fig)
 
