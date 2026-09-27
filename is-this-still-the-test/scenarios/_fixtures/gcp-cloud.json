@@ -1,0 +1,10 @@
+{
+  "syncToken": "0000000000",
+  "creationTime": "0000-00-00T00:00:00.000000",
+  "prefixes": [
+    {"ipv4Prefix": "34.80.0.0/15", "service": "Google Cloud", "scope": "asia-east1"},
+    {"ipv4Prefix": "34.102.0.0/16", "service": "Google Cloud", "scope": "us-west2"},
+    {"ipv4Prefix": "35.184.0.0/13", "service": "Google Cloud", "scope": "us-central1"},
+    {"ipv4Prefix": "35.235.216.0/22", "service": "Google Cloud", "scope": "us-central1"}
+  ]
+}

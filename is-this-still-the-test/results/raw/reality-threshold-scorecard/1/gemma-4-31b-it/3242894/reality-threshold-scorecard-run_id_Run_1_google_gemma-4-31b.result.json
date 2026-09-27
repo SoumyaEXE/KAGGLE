@@ -1,0 +1,30 @@
+{
+  "task_name": "reality-threshold-scorecard",
+  "source": "reality-threshold-scorecard",
+  "trial_name": "reality-threshold-scorecard-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "google/gemma-4-31b"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.14814814814814814,
+      "score_confidence_interval": 0.08333333333333331
+    }
+  },
+  "started_at": "2026-09-27T02:49:27.296129Z",
+  "finished_at": "2026-09-27T02:54:32.015307Z"
+}

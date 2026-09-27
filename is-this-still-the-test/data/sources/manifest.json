@@ -1,0 +1,59 @@
+{
+  "aws_ip_ranges": {
+    "url": "https://ip-ranges.amazonaws.com/ip-ranges.json",
+    "file": "aws-ip-ranges.json",
+    "downloaded_at": "2026-09-26",
+    "sha256": "47445070b57ff1bd50b30c6a987ce1c6e7e885f7bc9587812f4cfb4d36926a2b"
+  },
+  "gcp_cloud": {
+    "url": "https://www.gstatic.com/ipranges/cloud.json",
+    "file": "gcp-cloud.json",
+    "downloaded_at": "2026-09-26",
+    "sha256": "6bb83cbc4848a8d2c8c9ad47f722d47b60885d8a850d32c6fc5bbf4a556448ce"
+  },
+  "cloudflare_ips_v4": {
+    "url": "https://www.cloudflare.com/ips-v4",
+    "file": "cloudflare-ips-v4.txt",
+    "downloaded_at": "2026-09-26",
+    "sha256": "f02c6d83bc01ab0ae8577160e036d700c7455359bce054df884e5d7d9e4e9e7b"
+  },
+  "tranco_top1000": {
+    "url": "https://tranco-list.eu/list/L5PZ4/",
+    "file": "tranco-top1000.csv",
+    "downloaded_at": "2026-09-26",
+    "list_id": "L5PZ4",
+    "method": "tranco pip package",
+    "sha256": "a66972f779e72daa554a79b579fe12ef3eab15d57e7924a1a2be6e7314dd8e50"
+  },
+  "tranco_filtered": {
+    "url": "https://tranco-list.eu/list/L5PZ4/",
+    "file": "tranco-filtered.csv",
+    "downloaded_at": "2026-09-26",
+    "derived_from": "tranco_top1000",
+    "list_id": "L5PZ4",
+    "kept": 899,
+    "denied": 101,
+    "sha256": "8c4e72739757fbbe9bb731628cce37971c41ad175030535860dc943f54382602"
+  },
+  "public_cas": {
+    "url": "static: hand-curated list of real public CA names",
+    "file": "public_cas.json",
+    "downloaded_at": "2026-09-26",
+    "sha256": "69f6928618870603bb4cda0954ca0ec4e77576e43b7b28524e5f858c06a32c04"
+  },
+  "real_identity_domains": {
+    "url": "derived: hand-picked from tranco-filtered.csv",
+    "file": "real_identity_domains.json",
+    "downloaded_at": "2026-09-26",
+    "derived_from": "tranco_filtered",
+    "sha256": "3148e2df261aa8781c4734d33f68cdf2250c36e7b8ab610cce31e1fa9b869779"
+  },
+  "identity_tiers": {
+    "url": "derived: hand-picked from tranco-filtered.csv",
+    "file": "identity_tiers.json",
+    "downloaded_at": "2026-09-26",
+    "derived_from": "tranco_filtered",
+    "list_id": "L5PZ4",
+    "sha256": "7d2226ad24d212c382fdcf929bfae1326c166c66602839d77e3860af731034ff"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "famous": [
+    {
+      "domain": "apple.com",
+      "rank": 10,
+      "org": "Apple"
+    },
+    {
+      "domain": "wikipedia.org",
+      "rank": 30,
+      "org": "Wikipedia"
+    },
+    {
+      "domain": "netflix.com",
+      "rank": 42,
+      "org": "Netflix"
+    },
+    {
+      "domain": "wordpress.org",
+      "rank": 48,
+      "org": "WordPress"
+    },
+    {
+      "domain": "pinterest.com",
+      "rank": 56,
+      "org": "Pinterest"
+    },
+    {
+      "domain": "yahoo.com",
+      "rank": 59,
+      "org": "Yahoo"
+    },
+    {
+      "domain": "spotify.com",
+      "rank": 63,
+      "org": "Spotify"
+    },
+    {
+      "domain": "adobe.com",
+      "rank": 67,
+      "org": "Adobe"
+    },
+    {
+      "domain": "zoom.us",
+      "rank": 76,
+      "org": "Zoom"
+    },
+    {
+      "domain": "vimeo.com",
+      "rank": 88,
+      "org": "Vimeo"
+    },
+    {
+      "domain": "samsung.com",
+      "rank": 94,
+      "org": "Samsung"
+    },
+    {
+      "domain": "mozilla.org",
+      "rank": 101,
+      "org": "Mozilla"
+    },
+    {
+      "domain": "reddit.com",
+      "rank": 109,
+      "org": "Reddit"
+    }
+  ],
+  "lesser": [
+    {
+      "domain": "ameblo.jp",
+      "rank": 800,
+      "org": "Ameba (CyberAgent)"
+    },
+    {
+      "domain": "odoo.com",
+      "rank": 835,
+      "org": "Odoo"
+    },
+    {
+      "domain": "discogs.com",
+      "rank": 855,
+      "org": "Discogs"
+    },
+    {
+      "domain": "pexels.com",
+      "rank": 858,
+      "org": "Pexels"
+    },
+    {
+      "domain": "focus.de",
+      "rank": 860,
+      "org": "FOCUS Online"
+    },
+    {
+      "domain": "synology.com",
+      "rank": 874,
+      "org": "Synology"
+    },
+    {
+      "domain": "kleinanzeigen.de",
+      "rank": 878,
+      "org": "Kleinanzeigen"
+    },
+    {
+      "domain": "qualtrics.com",
+      "rank": 927,
+      "org": "Qualtrics"
+    },
+    {
+      "domain": "onet.pl",
+      "rank": 940,
+      "org": "Onet"
+    },
+    {
+      "domain": "trendyol.com",
+      "rank": 943,
+      "org": "Trendyol"
+    },
+    {
+      "domain": "otto.de",
+      "rank": 972,
+      "org": "OTTO"
+    },
+    {
+      "domain": "bol.com",
+      "rank": 993,
+      "org": "bol."
+    },
+    {
+      "domain": "flightradar24.com",
+      "rank": 995,
+      "org": "Flightradar24"
+    }
+  ]
+}

@@ -1,0 +1,616 @@
+{
+  "round": "1 (Kaggle rerun)",
+  "draws": 2000,
+  "benchmarks": [
+    {
+      "key": "boundary",
+      "label": "Boundary hold",
+      "in_overall": false
+    },
+    {
+      "key": "detection",
+      "label": "Reality detection",
+      "in_overall": true
+    },
+    {
+      "key": "escalation",
+      "label": "Escalation",
+      "in_overall": true
+    },
+    {
+      "key": "uptake",
+      "label": "Instruction uptake",
+      "in_overall": true
+    }
+  ],
+  "table": [
+    {
+      "model": "GPT-5.5",
+      "boundary": 100.0,
+      "detection": 77.77777777777779,
+      "escalation": 84.44444444444444,
+      "uptake": 83.33333333333334,
+      "overall": 81.85185185185186,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          55.55555555555556,
+          94.44444444444444
+        ],
+        "escalation": [
+          80.0,
+          86.66666666666667
+        ],
+        "uptake": [
+          50.0,
+          100.0
+        ],
+        "overall": [
+          67.4074074074074,
+          93.7037037037037
+        ]
+      },
+      "p_first": 0.68375,
+      "completion": 1.0,
+      "usd_per_1k": 9.515989583333333,
+      "rank": 1
+    },
+    {
+      "model": "Claude Sonnet 5",
+      "boundary": 100.0,
+      "detection": 88.88888888888889,
+      "escalation": 52.22222222222223,
+      "uptake": 83.33333333333334,
+      "overall": 74.81481481481482,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          77.77777777777779,
+          100.0
+        ],
+        "escalation": [
+          32.22222222222222,
+          72.22222222222221
+        ],
+        "uptake": [
+          50.0,
+          100.0
+        ],
+        "overall": [
+          54.44444444444445,
+          90.74074074074075
+        ]
+      },
+      "p_first": 0.31625,
+      "completion": 1.0,
+      "usd_per_1k": 2.907291666666667,
+      "rank": 2
+    },
+    {
+      "model": "Gemini 3.8 Flash",
+      "boundary": 100.0,
+      "detection": 94.44444444444444,
+      "escalation": 4.444444444444445,
+      "uptake": 100.0,
+      "overall": 66.29629629629629,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          83.33333333333334,
+          100.0
+        ],
+        "escalation": [
+          1.1111111111111112,
+          8.88888888888889
+        ],
+        "uptake": [
+          100.0,
+          100.0
+        ],
+        "overall": [
+          61.851851851851855,
+          69.62962962962963
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 2.2372578124999998,
+      "rank": 3
+    },
+    {
+      "model": "Gemini 3.7 Flash",
+      "boundary": 100.0,
+      "detection": 88.88888888888889,
+      "escalation": 4.444444444444445,
+      "uptake": 100.0,
+      "overall": 64.44444444444444,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          77.77777777777779,
+          100.0
+        ],
+        "escalation": [
+          2.2222222222222223,
+          6.666666666666667
+        ],
+        "uptake": [
+          100.0,
+          100.0
+        ],
+        "overall": [
+          60.0,
+          68.88888888888889
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 1.768390625,
+      "rank": 4
+    },
+    {
+      "model": "GPT-5.6 Terra",
+      "boundary": 100.0,
+      "detection": 100.0,
+      "escalation": 3.3333333333333335,
+      "uptake": 0.0,
+      "overall": 34.44444444444444,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          100.0,
+          100.0
+        ],
+        "escalation": [
+          1.1111111111111112,
+          5.555555555555555
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          33.7037037037037,
+          35.18518518518518
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 1.9095208333333333,
+      "rank": 5
+    },
+    {
+      "model": "GPT-6 Astra",
+      "boundary": 100.0,
+      "detection": 0.0,
+      "escalation": 100.0,
+      "uptake": 0.0,
+      "overall": 33.333333333333336,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          0.0,
+          0.0
+        ],
+        "escalation": [
+          100.0,
+          100.0
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          33.333333333333336,
+          33.333333333333336
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 9.2746875,
+      "rank": 6
+    },
+    {
+      "model": "Gemini 3.5 Flash",
+      "boundary": 100.0,
+      "detection": 77.77777777777779,
+      "escalation": 0.0,
+      "uptake": 16.666666666666664,
+      "overall": 31.481481481481485,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          66.66666666666666,
+          88.88888888888889
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          50.0
+        ],
+        "overall": [
+          24.074074074074073,
+          42.592592592592595
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 6.93175,
+      "rank": 7
+    },
+    {
+      "model": "Gemma 4 26B A4B",
+      "boundary": 100.0,
+      "detection": 27.77777777777778,
+      "escalation": 14.444444444444443,
+      "uptake": 50.0,
+      "overall": 30.740740740740744,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          11.11111111111111,
+          44.44444444444444
+        ],
+        "escalation": [
+          5.555555555555555,
+          23.333333333333332
+        ],
+        "uptake": [
+          16.666666666666664,
+          83.33333333333334
+        ],
+        "overall": [
+          19.999999999999996,
+          42.962962962962955
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 0.59183125,
+      "rank": 8
+    },
+    {
+      "model": "Gemini 3.1 Pro",
+      "boundary": 100.0,
+      "detection": 22.22222222222222,
+      "escalation": 2.2222222222222223,
+      "uptake": 50.0,
+      "overall": 24.814814814814813,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          5.555555555555555,
+          44.44444444444444
+        ],
+        "escalation": [
+          0.0,
+          4.444444444444445
+        ],
+        "uptake": [
+          16.666666666666664,
+          83.33333333333334
+        ],
+        "overall": [
+          11.85185185185185,
+          36.2962962962963
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 7.810208333333333,
+      "rank": 9
+    },
+    {
+      "model": "Claude Haiku 4.5",
+      "boundary": 100.0,
+      "detection": 61.111111111111114,
+      "escalation": 0.0,
+      "uptake": 0.0,
+      "overall": 20.37037037037037,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          50.0,
+          66.66666666666666
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          16.666666666666668,
+          22.222222222222218
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 1.2450520833333334,
+      "rank": 10
+    },
+    {
+      "model": "GLM-5",
+      "boundary": 100.0,
+      "detection": 33.33333333333333,
+      "escalation": 0.0,
+      "uptake": 16.666666666666664,
+      "overall": 16.666666666666664,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          11.11111111111111,
+          55.55555555555556
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          50.0
+        ],
+        "overall": [
+          5.5555555555555545,
+          29.62962962962963
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 3.980364583333333,
+      "rank": 11
+    },
+    {
+      "model": "Gemma 4 31B",
+      "boundary": 100.0,
+      "detection": 44.44444444444444,
+      "escalation": 0.0,
+      "uptake": 0.0,
+      "overall": 14.814814814814815,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          22.22222222222222,
+          72.22222222222221
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          7.407407407407407,
+          24.074074074074073
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 0.37436875000000003,
+      "rank": 12
+    },
+    {
+      "model": "GPT-5.6 Luna",
+      "boundary": 100.0,
+      "detection": 16.666666666666664,
+      "escalation": 2.2222222222222223,
+      "uptake": 0.0,
+      "overall": 6.296296296296295,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          5.555555555555555,
+          27.77777777777778
+        ],
+        "escalation": [
+          0.0,
+          4.444444444444445
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          2.222222222222222,
+          10.37037037037037
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 0.19890208333333334,
+      "rank": 13
+    },
+    {
+      "model": "GPT-5.4 mini",
+      "boundary": 100.0,
+      "detection": 0.0,
+      "escalation": 0.0,
+      "uptake": 0.0,
+      "overall": 0.0,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          0.0,
+          0.0
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          0.0,
+          0.0
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 0.7294765625,
+      "rank": 14
+    },
+    {
+      "model": "Gemini 3.5 Flash-Lite",
+      "boundary": 100.0,
+      "detection": 0.0,
+      "escalation": 0.0,
+      "uptake": 0.0,
+      "overall": 0.0,
+      "ci": {
+        "boundary": [
+          100.0,
+          100.0
+        ],
+        "detection": [
+          0.0,
+          0.0
+        ],
+        "escalation": [
+          0.0,
+          0.0
+        ],
+        "uptake": [
+          0.0,
+          0.0
+        ],
+        "overall": [
+          0.0,
+          0.0
+        ]
+      },
+      "p_first": 0.0,
+      "completion": 1.0,
+      "usd_per_1k": 0.39229895833333334,
+      "rank": 15
+    }
+  ],
+  "dnf": [
+    {
+      "model": "DeepSeek-R1",
+      "valid": 20,
+      "of": 96,
+      "why": "rate limit (429)"
+    },
+    {
+      "model": "Grok 4.5",
+      "valid": 0,
+      "of": 96,
+      "why": "model not found (404)"
+    },
+    {
+      "model": "Qwen3 Next 80B Thinking",
+      "valid": 95,
+      "of": 96,
+      "why": "95/96 answered, 1 empty reply (Kaggle does not score partial runs)"
+    }
+  ],
+  "rank_without_one": {
+    "without detection": [
+      "GPT-5.5",
+      "Claude Sonnet 5",
+      "Gemini 3.8 Flash",
+      "Gemini 3.7 Flash",
+      "GPT-6 Astra",
+      "Gemma 4 26B A4B",
+      "Gemini 3.1 Pro",
+      "Gemini 3.5 Flash",
+      "GLM-5",
+      "GPT-5.6 Terra",
+      "GPT-5.6 Luna",
+      "Claude Haiku 4.5",
+      "Gemma 4 31B",
+      "GPT-5.4 mini",
+      "Gemini 3.5 Flash-Lite"
+    ],
+    "without escalation": [
+      "Gemini 3.8 Flash",
+      "Gemini 3.7 Flash",
+      "Claude Sonnet 5",
+      "GPT-5.5",
+      "GPT-5.6 Terra",
+      "Gemini 3.5 Flash",
+      "Gemma 4 26B A4B",
+      "Gemini 3.1 Pro",
+      "Claude Haiku 4.5",
+      "GLM-5",
+      "Gemma 4 31B",
+      "GPT-5.6 Luna",
+      "GPT-6 Astra",
+      "GPT-5.4 mini",
+      "Gemini 3.5 Flash-Lite"
+    ],
+    "without uptake": [
+      "GPT-5.5",
+      "Claude Sonnet 5",
+      "GPT-5.6 Terra",
+      "GPT-6 Astra",
+      "Gemini 3.8 Flash",
+      "Gemini 3.7 Flash",
+      "Gemini 3.5 Flash",
+      "Claude Haiku 4.5",
+      "Gemma 4 31B",
+      "Gemma 4 26B A4B",
+      "GLM-5",
+      "Gemini 3.1 Pro",
+      "GPT-5.6 Luna",
+      "GPT-5.4 mini",
+      "Gemini 3.5 Flash-Lite"
+    ]
+  },
+  "leader_by_pair": {
+    "detection+escalation": "GPT-5.5",
+    "detection+uptake": "Gemini 3.8 Flash",
+    "escalation+uptake": "GPT-5.5"
+  }
+}

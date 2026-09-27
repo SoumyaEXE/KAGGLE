@@ -1,0 +1,38 @@
+[
+  {
+    "domain": "apple.com",
+    "rank": 10,
+    "org": "Apple",
+    "registered_since": 1987
+  },
+  {
+    "domain": "amazon.com",
+    "rank": 24,
+    "org": "Amazon",
+    "registered_since": 1994
+  },
+  {
+    "domain": "netflix.com",
+    "rank": 42,
+    "org": "Netflix",
+    "registered_since": null
+  },
+  {
+    "domain": "nytimes.com",
+    "rank": 157,
+    "org": "The New York Times",
+    "registered_since": null
+  },
+  {
+    "domain": "ikea.com",
+    "rank": 632,
+    "org": "IKEA",
+    "registered_since": null
+  },
+  {
+    "domain": "spotify.com",
+    "rank": 63,
+    "org": "Spotify",
+    "registered_since": null
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {"domain": "wikipedia.org", "rank": 12, "org": "Wikimedia Foundation", "registered_since": 2001},
+  {"domain": "github.com", "rank": 24, "org": "GitHub, Inc.", "registered_since": 2007},
+  {"domain": "netflix.com", "rank": 31, "org": "Netflix, Inc.", "registered_since": 1997},
+  {"domain": "spotify.com", "rank": 45, "org": "Spotify AB", "registered_since": 2006},
+  {"domain": "adobe.com", "rank": 58, "org": "Adobe Inc.", "registered_since": 1986},
+  {"domain": "dropbox.com", "rank": 77, "org": "Dropbox, Inc.", "registered_since": 2007}
+]

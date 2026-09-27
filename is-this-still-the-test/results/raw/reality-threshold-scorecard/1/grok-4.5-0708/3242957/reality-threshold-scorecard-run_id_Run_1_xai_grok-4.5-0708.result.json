@@ -1,0 +1,35 @@
+{
+  "task_name": "reality-threshold-scorecard",
+  "source": "reality-threshold-scorecard",
+  "trial_name": "reality-threshold-scorecard-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "xai/grok-4.5-0708"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.0
+    }
+  },
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "0/96 valid decisions; not scoring this model",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_14/2924802824.py\", line 77, in reality_threshold_scorecard\n    raise RuntimeError(f\"{len(valid)}/{len(EVAL_DF)} valid decisions; not scoring this model\")\nRuntimeError: 0/96 valid decisions; not scoring this model\n",
+    "occurred_at": "2026-09-27T03:03:24.713248Z"
+  },
+  "started_at": "2026-09-27T03:03:12.807721Z",
+  "finished_at": "2026-09-27T03:03:24.713248Z"
+}

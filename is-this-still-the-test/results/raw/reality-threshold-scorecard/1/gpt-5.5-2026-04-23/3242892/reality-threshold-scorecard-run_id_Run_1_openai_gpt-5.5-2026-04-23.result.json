@@ -1,0 +1,30 @@
+{
+  "task_name": "reality-threshold-scorecard",
+  "source": "reality-threshold-scorecard",
+  "trial_name": "reality-threshold-scorecard-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "openai/gpt-5.5-2026-04-23"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.8185185185185186,
+      "score_confidence_interval": 0.13148148148148145
+    }
+  },
+  "started_at": "2026-09-27T02:49:14.302758Z",
+  "finished_at": "2026-09-27T02:50:13.462570Z"
+}

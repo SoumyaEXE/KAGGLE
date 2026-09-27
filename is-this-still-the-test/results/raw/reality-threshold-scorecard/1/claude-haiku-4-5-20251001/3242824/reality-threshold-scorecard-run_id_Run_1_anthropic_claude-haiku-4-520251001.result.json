@@ -1,0 +1,30 @@
+{
+  "task_name": "reality-threshold-scorecard",
+  "source": "reality-threshold-scorecard",
+  "trial_name": "reality-threshold-scorecard-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "anthropic/claude-haiku-4-5@20251001"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "score": 0.2037037037037037,
+      "score_confidence_interval": 0.02777777777777775
+    }
+  },
+  "started_at": "2026-09-27T02:32:40.477711Z",
+  "finished_at": "2026-09-27T02:33:07.236932Z"
+}

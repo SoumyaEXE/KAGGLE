@@ -1,0 +1,14 @@
+model_dir,task_version,run_id,rows,valid,status
+claude-opus-5-default,3,3238213,96,0,incomplete
+grok-4.6,2,3233497,96,0,incomplete
+gpt-oss-120b,2,3233500,96,3,incomplete
+gpt-5.5-2026-04-23,3,3238214,96,7,incomplete
+deepseek-r1-0528,2,3233498,96,17,incomplete
+qwen3-235b-a22b-instruct-2507,2,3233499,96,17,incomplete
+claude-haiku-4-5-20251001,2,3233492,96,96,complete
+gemini-3.1-pro-preview,2,3233496,96,96,complete
+gpt-5.4-mini-2026-03-17,3,3238215,96,96,complete
+gemini-3.7-flash,3,3238210,96,96,complete
+gemini-3.8-flash,2,3233495,96,96,complete
+gemma-4-31b-it,2,3233501,96,96,complete
+claude-sonnet-5-default,2,3233491,96,96,complete

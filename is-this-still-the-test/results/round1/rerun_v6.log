@@ -1,0 +1,50 @@
+3 run(s) failed. Details below:
+  [grok-4.6]
+    Traceback (most recent call last):
+  File "/benchmarks/src/kaggle_benchmarks/tasks.py", line 171, in run
+    run.result = self.func(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_14/1113417796.py", line 73, in reality_threshold
+    raise RuntimeError(f"no valid {HEADLINE_CONDITION} decisions "
+RuntimeError: no valid ladder_L4 decisions (0/96 rows completed); not scoring this model
+  [gpt-oss-120b]
+    Traceback (most recent call last):
+  File "/benchmarks/src/kaggle_benchmarks/tasks.py", line 171, in run
+    run.result = self.func(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_14/1113417796.py", line 73, in reality_threshold
+    raise RuntimeError(f"no valid {HEADLINE_CONDITION} decisions "
+RuntimeError: no valid ladder_L4 decisions (4/96 rows completed); not scoring this model
+  [claude-opus-5-default]
+    Traceback (most recent call last):
+  File "/benchmarks/src/kaggle_benchmarks/tasks.py", line 171, in run
+    run.result = self.func(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ipykernel_14/1113417796.py", line 73, in reality_threshold
+    raise RuntimeError(f"no valid {HEADLINE_CONDITION} decisions "
+RuntimeError: no valid ladder_L4 decisions (96/96 rows completed); not scoring this model
+Submitted run(s) for task 'reality-threshold'.
+  claude-opus-5-default: Scheduled
+  gpt-5.5-2026-04-23: Scheduled
+  deepseek-r1-0528: Scheduled
+  gpt-oss-120b: Scheduled
+  qwen3-235b-a22b-instruct-2507: Scheduled
+  grok-4.6: Scheduled
+Waiting for run(s) to complete...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  6 run(s) still in progress...
+  3 run(s) still in progress...
+  3 run(s) still in progress...
+All runs completed:
+  grok-4.6: ERRORED
+  qwen3-235b-a22b-instruct-2507: COMPLETED
+  gpt-oss-120b: ERRORED
+  deepseek-r1-0528: COMPLETED
+  gpt-5.5-2026-04-23: COMPLETED
+  claude-opus-5-default: ERRORED

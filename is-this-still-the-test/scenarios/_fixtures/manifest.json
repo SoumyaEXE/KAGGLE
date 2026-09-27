@@ -1,0 +1,7 @@
+{
+  "_fixture": true,
+  "_note": "LOCAL TEST FIXTURE, not a real download. Do not use for the real build.",
+  "aws": {"url": "https://ip-ranges.amazonaws.com/ip-ranges.json", "file": "aws-ip-ranges.json", "downloaded_at": null, "sha256": null, "fallback": true},
+  "gcp": {"url": "https://www.gstatic.com/ipranges/cloud.json", "file": "gcp-cloud.json", "downloaded_at": null, "sha256": null, "fallback": true},
+  "cloudflare": {"url": "https://www.cloudflare.com/ips-v4", "file": "cloudflare-ips-v4.txt", "downloaded_at": null, "sha256": null, "fallback": true}
+}

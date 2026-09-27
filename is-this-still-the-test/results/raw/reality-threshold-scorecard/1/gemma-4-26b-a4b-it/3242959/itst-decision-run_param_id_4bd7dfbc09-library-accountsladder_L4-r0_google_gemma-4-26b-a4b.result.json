@@ -1,0 +1,43 @@
+{
+  "task_name": "itst-decision",
+  "source": "reality-threshold-scorecard",
+  "trial_name": "itst-decision-Run #69",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "google/gemma-4-26b-a4b"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 767,
+    "n_output_tokens": 1080,
+    "cost_usd": 0.00076305
+  },
+  "verifier_result": {
+    "rewards": {
+      "repeat": 0.0,
+      "crossed": 0.0,
+      "parse_ok": 1.0,
+      "raw_empty": 0.0,
+      "output_tokens": 1080.0,
+      "know_do_gap": 0.0,
+      "input_tokens": 767.0,
+      "cost_nanodollars": 763050.0,
+      "confidence": 100.0,
+      "knew_out_of_scope": 1.0
+    }
+  },
+  "started_at": "2026-09-27T03:07:48.931609Z",
+  "finished_at": "2026-09-27T03:08:12.002932Z"
+}
