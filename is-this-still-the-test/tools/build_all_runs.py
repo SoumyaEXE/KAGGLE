@@ -22,6 +22,11 @@ def run_rows(run_dir: Path, version: str, model_dir: str):
         info = json.loads(f.read_text(encoding="utf-8")).get("exception_info") or {}
         if info:
             errors[f.name] = f"{info.get('exception_type', '')}: {info.get('exception_message', '')}"
+    started = ""
+    for f in run_dir.glob("*.run.json"):  # the leaderboard run file carries the run's start time
+        if not f.name.startswith("itst-decision"):
+            started = json.loads(f.read_text(encoding="utf-8")).get("startTime", "")
+            break
     rows = []
     for line in jl.read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -29,7 +34,7 @@ def run_rows(run_dir: Path, version: str, model_dir: str):
         r = json.loads(line)
         key = f"{r['row_id'].replace('::', '')}-r{r.get('repeat', 0)}_"
         r["error"] = next((e for n, e in errors.items() if key in n), "")
-        r.update(task_version=int(version), model_dir=model_dir, run_id=int(run_dir.name))
+        r.update(task_version=int(version), model_dir=model_dir, run_id=int(run_dir.name), run_start=started)
         r["valid"] = r.get("status") == "completed" and r.get("outcome") in ("safe", "crossed")
         rows.append(r)
     return rows

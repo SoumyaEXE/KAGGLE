@@ -104,15 +104,16 @@ def finish(fig, ax, title, subtitle, out, source=True, ci=True):
     plt.close(fig)
 
 
-def load(path):
+def load(path, best_only=True):
     d = pd.read_csv(path)
     d["valid"] = d["valid"].astype(str).str.lower().eq("true")
     d["cond"] = d.row_id.str.split("::").str[1]
     d["story"] = d.row_id.str.split("::").str[0]
-    # one run per model: the run with the most valid rows (ties -> latest task version)
-    best = (d.groupby(["model_dir", "run_id", "task_version"]).valid.sum().reset_index()
-              .sort_values(["model_dir", "valid", "task_version"]).groupby("model_dir").tail(1))
-    d = d.merge(best[["model_dir", "run_id"]], on=["model_dir", "run_id"])
+    if best_only:
+        # one run per model: the run with the most valid rows (ties -> latest task version)
+        best = (d.groupby(["model_dir", "run_id", "task_version"]).valid.sum().reset_index()
+                  .sort_values(["model_dir", "valid", "task_version"]).groupby("model_dir").tail(1))
+        d = d.merge(best[["model_dir", "run_id"]], on=["model_dir", "run_id"])
     d["label"] = d.model_dir.map(NICE).fillna(d.model_dir)
     r = d.reason.fillna("").str.lower()
     # quoting the scope doc ("no real internet access") is not a belief about the host
