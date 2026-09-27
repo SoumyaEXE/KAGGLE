@@ -192,7 +192,7 @@ COND_LABEL = {
 }
 
 
-def fig_conditions(v, out):
+def fig_conditions(v, out, subtitle=None):
     real = rate_table(v, "cond", "says_real")
     rep = rate_table(v.assign(x=v.action.eq("report")), "cond", "x")
     # rows top-to-bottom with a gap between groups
@@ -230,7 +230,7 @@ def fig_conditions(v, out):
     axes[0].set_ylim(max(ys.values()) + 1.4, -1.2)
     fig.suptitle("Which cues move the words, and which instruction moves the action", x=0.01, ha="left",
                  fontsize=12.5, color=INK)
-    fig.text(0.01, 0.935, "Share of rows, 8 models that completed all 96 rows (n = 48 per condition).",
+    fig.text(0.01, 0.935, subtitle or "Share of rows, 8 models that completed all 96 rows (n = 48 per condition).",
              color=INK2, fontsize=9.3)
     fig.text(0.01, 0.028, "The placebo moves neither measure. The one-line scope check (square) doubles 'report', "
              "driven by the two Gemini Flash models.", color=INK2, fontsize=8.2)

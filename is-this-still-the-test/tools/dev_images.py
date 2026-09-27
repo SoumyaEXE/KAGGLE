@@ -5,7 +5,7 @@ DEV's public API cannot upload images, so the images are uploaded once through t
 
     python tools/dev_images.py prepare [post/dev_post_round1.md]
         Copies every image the post references (cover first, then in reading order) into
-        post/dev_upload/NN-name.png and writes post/dev_upload/urls.txt with one line per image.
+        post/dev_upload_<post>/NN-name.png and writes urls.txt there, one line per image.
     python tools/dev_images.py fill [post/dev_post_round1.md]
         Reads the URLs you pasted into urls.txt and writes <post>.dev.md with every
         <UPLOAD path> placeholder replaced. The source post keeps its placeholders.
@@ -17,8 +17,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 UPLOAD_RX = re.compile(r"<UPLOAD ([^>]+)>")
-OUT_DIR = ROOT / "post" / "dev_upload"
-URLS = OUT_DIR / "urls.txt"
+
+
+def dirs(post):
+    """Each post gets its own upload folder: post/dev_upload_<post name>/ with urls.txt."""
+    out = ROOT / "post" / f"dev_upload_{post.stem}"
+    return out, out / "urls.txt"
 
 
 def placeholders(post):
@@ -34,6 +38,7 @@ def upload_name(i, path):
 
 
 def prepare(post):
+    OUT_DIR, URLS = dirs(post)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     lines = ["# One line per image: '<file> = <DEV URL>'. Upload each file in the DEV editor",
              "# (Upload image button), copy the URL from the markdown it gives you, paste it after '='."]
@@ -53,6 +58,7 @@ def prepare(post):
 
 
 def fill(post):
+    OUT_DIR, URLS = dirs(post)
     urls = {}
     for l in URLS.read_text(encoding="utf-8").splitlines():
         if " = " in l and not l.startswith("#"):
