@@ -173,6 +173,33 @@ To check the source snapshot, compare `sha256sum data/sources/*` with
 On Kaggle: the benchmark is at `{{KAGGLE_BENCHMARK_URL}}` and the dataset at
 `{{KAGGLE_DATASET_URL}}`. The pre-registration is at `{{PREREG_URL}}`.
 
+## Round-1 results, the scorecard and the paper
+
+Round 1 and a second, independent Kaggle run are analysed from the collected
+per-decision logs committed in `results/round1/` and `results/rerun/`.
+
+- Kaggle tasks: [reality-threshold](https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold)
+  (preregistered crossing rate) and
+  [reality-threshold-scorecard](https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold-scorecard)
+  (overall of reality detection, escalation and instruction uptake; see `scorecard_core.py`).
+- Paper: [`paper/main.pdf`](paper/main.pdf) (IEEE two-column) and
+  [`paper/main.tex`](paper/main.tex) (IEEEtran, for Overleaf or arXiv).
+
+Charts, screenshots and the blog drafts are **not** in the repository (see
+`.gitignore`); every figure is regenerated from the committed CSVs:
+
+```bash
+python analyze_round1.py                                   # round-1 figures + stats.json
+python figures_story.py                                    # pipeline, ladder panels, themes, cover
+python scorecard.py                                        # round-1 scorecard + leaderboard
+python scorecard.py --in results/rerun/all_runs_raw.csv --out figures/rerun --round "1 (Kaggle rerun)"
+python compare_runs.py && python generations.py            # replication + model generations
+python paper/build_paper.py                                # paper/main.pdf + paper/main.tex
+```
+
+To refresh the CSVs from Kaggle: `kaggle b t download <task> -o results/raw`, then
+`python tools/build_all_runs.py --raw results/raw/<task> --out results/<run>/all_runs_raw.csv`.
+
 ## Credits
 
 - [Kaggle Benchmarks (kbench)](https://github.com/Kaggle/kaggle-benchmarks) and the

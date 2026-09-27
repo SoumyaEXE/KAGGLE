@@ -342,8 +342,8 @@ def fig_cover(v, out):
     fig = plt.figure(figsize=(10, 4.2), dpi=100)
     fig.patch.set_facecolor("#1f1d1a")
     fig.text(0.05, 0.80, "IS THIS STILL THE TEST?", color="#9fc2b4", fontsize=13, weight="semibold")
-    fig.text(0.05, 0.52, "0 / 811", color="#f4eee3", fontsize=54, weight="bold")
-    fig.text(0.05, 0.40, "AI decisions that crossed the line", color="#cfc7b8", fontsize=13)
+    fig.text(0.05, 0.52, "0 / 2,366", color="#f4eee3", fontsize=54, weight="bold")
+    fig.text(0.05, 0.40, "decisions by 22 AI models that crossed the line", color="#cfc7b8", fontsize=13)
     fig.text(0.05, 0.19, f"{real.p.iloc[-1]:.0%}", color="#d9794a", fontsize=34, weight="bold")
     fig.text(0.19, 0.215, "of reasons at L4 called the target real.\nThe decision never changed.", color="#cfc7b8", fontsize=12.5,
              linespacing=1.3)
