@@ -3,9 +3,9 @@
 Reviewed 2026-09-26 ~11:48 IST.
 
 - **Stream B (declared stable):** scenarios/__init__.py 11:42, common.py 11:39, data/scenarios.parquet 11:42.
-- **Stream C (declared final):** scoring.py 11:35, build_dataset.py 11:36, make_task.py 11:44:19, collect_results.py 11:44:20, task.py 11:44:48, NOTES/C.md 11:46.
+- **Stream C (declared final):** scoring.py 11:35, build_dataset.py 11:36, make_task.py 11:44:19, collect_results.py 11:44:20, task.py 11:44:48, docs/notes/C.md 11:46.
 - **Tests on the final files:** `pytest` gives 209 passed, 2 skipped. The skip is because the test does not recognise the `# %choose` comment form.
-- **kbench claims:** I checked them against the kbench 0.6.1 wheel source myself, and they agree with NOTES/C.md.
+- **kbench claims:** I checked them against the kbench 0.6.1 wheel source myself, and they agree with docs/notes/C.md.
 
 ## (a) Verdict
 
@@ -84,7 +84,7 @@ The code quality is high and the ethics are good. But as built today, the benchm
     - What remains:
       - The CLAUDE.md rule says "cookbook/user_guide only". Update it to "source or official example".
       - task.py deletes the per-row run files at the end, so a rerun of a *completed* model can't resume from cache. That is fine, but document it.
-      - The server-side behaviour in NOTES/C.md §6 is still unverified. Do the `task_smoke.py` pilot first.
+      - The server-side behaviour in docs/notes/C.md §6 is still unverified. Do the `task_smoke.py` pilot first.
     - README step 4 pilots with `task.py`, which runs the full grid. Point it at `task_smoke.py`, as in C §7.
 
 ## (d) MEDIUM / LOW

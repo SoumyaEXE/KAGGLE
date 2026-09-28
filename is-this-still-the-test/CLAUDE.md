@@ -7,7 +7,7 @@ controlled, single-turn decision benchmark.
 
 Interfaces between modules are pinned in `CONTRACTS.md`. Read it before
 changing any file. If you must change an interface, record it in
-`NOTES/<stream>.md` and stay backward compatible.
+`docs/notes/<stream>.md` and stay backward compatible.
 
 ## Repo layout
 

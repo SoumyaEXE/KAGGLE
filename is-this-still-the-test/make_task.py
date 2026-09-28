@@ -4,7 +4,7 @@
     python make_task.py --smoke           # data/scenarios_smoke.parquet -> task_smoke.py (8 calls)
     python make_task.py --repeats 3       # each row asked 3 times (seed = repeat index)
     python make_task.py --scenarios 12    # only the first 12 stories (cost control)
-    python make_task.py --no-choose       # omit the final live `%choose` cell (see NOTES/C.md)
+    python make_task.py --no-choose       # omit the final live `%choose` cell (see docs/notes/C.md)
 
 Why a generator: `kaggle b t push` uploads ONE .py file (converted to a notebook
 with jupytext). task.py therefore cannot import scoring.py or read data/. This

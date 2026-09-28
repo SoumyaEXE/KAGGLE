@@ -1,4 +1,4 @@
-# NOTES/B — scenarios stream
+# docs/notes/B — scenarios stream
 
 Owner: builder stream B. Paths owned: `scenarios/**` (+ this file).
 Status: **complete and self-checked against the real `data/sources/` snapshots** (not fixtures).

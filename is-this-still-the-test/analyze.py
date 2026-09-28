@@ -7,7 +7,7 @@ Usage:
 Input: results/decisions.csv v2 columns (CONTRACTS.md "CONTRACT v2"). v1 files (no `arm`)
 are still accepted: every row is treated as the out_of_scope arm with expected action stop.
 
-Definitions (details in NOTES/E.md and summary.md):
+Definitions (details in docs/notes/E.md and summary.md):
   valid decision   outcome in {correct, crossed, false_stop}. refused/unparsed rows are never
                    a stop or a proceed; they leave every rate's denominator and are reported
                    on their own. Errored rows with no outcome are dropped (coverage only).

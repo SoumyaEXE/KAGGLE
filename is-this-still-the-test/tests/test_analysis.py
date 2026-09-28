@@ -1,6 +1,6 @@
 """analyze.py / collect_results.py / PREREGISTRATION (CONTRACT v2).
 
-R50 semantics (CONTRACT v2 "Analysis v2"; documented in NOTES/D.md):
+R50 semantics (CONTRACT v2 "Analysis v2"; documented in docs/notes/D.md):
   R50 = level where the rate FALLS THROUGH 0.5 with the STRICT rule (< 0.5; exactly 0.5
   is not below), linearly interpolated between the bracketing levels.
   In-scope arm: rate = proceed rate (headline "reality overrides authorization").

@@ -82,23 +82,38 @@ set temperature. The seed is the repeat index where the proxy supports it.
 ## Repo layout
 
 ```text
-fetch_sources.py        # the ONLY network code: snapshots public sources once
-data/sources/           # dated snapshots + manifest.json (sha256, dates, Tranco list id)
-scenarios/              # 24 base stories; build_all() emits all 25 conditions
-scoring.py              # pure scoring: outcome, crossing, false stop, know-vs-do, Wilson CI
-build_dataset.py        # scenarios x conditions -> data/scenarios.parquet (+ .csv)
-make_task.py            # generates the self-contained task.py / task_smoke.py (data embedded)
-task.py                 # full kbench task; ends with .run() and a `# %choose` line
-task_smoke.py           # pilot: 2 scenarios x 4 conditions x 1 repeat = 8 calls
-collect_results.py      # downloaded kbench runs -> results/decisions.csv
-analyze.py              # decisions.csv -> figures/ (PNGs, summary.md, summary.json)
-tools/mock_results.py   # synthetic decisions, for developing analyze.py
-tests/                  # edge-case test suite
-results/  figures/      # outputs
-post/draft.md           # DEV post draft
-CONTRACTS.md            # interfaces between modules
-SOURCES.md  ETHICS.md  PREREGISTRATION.md  CLAUDE.md
+# Dataset
+fetch_sources.py          the ONLY network code: snapshots public sources once
+data/sources/             dated snapshots + manifest.json (sha256, dates, Tranco list id)
+scenarios/                invented organisations; build_all() emits every condition
+build_dataset.py          scenarios x conditions -> data/scenarios.parquet (+ .csv)
+pilot_round2.py           round-2 pilot grid -> data/round2_pilot.csv
+
+# Kaggle tasks (self-contained, data embedded; each ends with .run())
+make_task.py              -> task.py, task_smoke.py
+tools/make_scorecard_task.py  -> task_scorecard.py      (reality-threshold-scorecard)
+tools/make_pilot_task.py      -> task_round2_pilot.py   (itst-round2-pilot)
+daily.ps1                 run the tasks on the model panel (pilot | grid | generations | status)
+
+# Scoring and analysis
+scoring.py  scorecard_core.py   pure scoring (outcomes, Wilson CI, scorecard sub-scores)
+tools/build_all_runs.py   downloaded Kaggle runs -> results/*/all_runs_raw.csv
+analyze_round1.py  figures_story.py  figures_final.py   round-1 statistics and charts
+scorecard.py  compare_runs.py  generations.py            scorecard, replication, versions
+analyze_pilot.py          round-2 pilot: balanced accuracy, R50, charts
+tools/refresh_all.py      rebuild every result, chart, the post and the paper in one go
+
+# Results and write-ups
+results/                  per-decision logs for every run (round1, rerun, pilot)
+paper/                    IEEE-style paper: content.py -> main.pdf / main.tex
+tests/                    test suite (scoring, dataset safety, zero network, tasks)
+
+# Design documents
+PREREGISTRATION.md  CONTRACTS.md  SOURCES.md  ETHICS.md
+docs/notes/               build notes and the pre-run design review
 ```
+
+Charts (`figures/`) and blog drafts (`post/`) are generated locally and not committed; `python tools/refresh_all.py` rebuilds them.
 
 ## Local workflow
 

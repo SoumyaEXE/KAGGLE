@@ -3,7 +3,7 @@
 Source of truth for the product: `../Is This Still the Test Kaggle Benchmark Build Spec.md`.
 This file pins the interfaces between workstreams so agents can build in parallel.
 If you must change an interface, do not silently diverge: write the change in
-`NOTES/<your-stream>.md` and make your side backward compatible.
+`docs/notes/<your-stream>.md` and make your side backward compatible.
 
 Ignore every mention of "Sanity" in the spec. That is another project. No timeline coupling.
 
@@ -28,7 +28,7 @@ Python 3.14 on Windows, pandas 3.x, pyarrow, matplotlib installed. Use `python`,
 | `scoring.py`, `build_dataset.py`, `task.py`, `make_task.py`, `collect_results.py`, `data/scenarios.parquet`, `data/scenarios.csv` | C: dataset + kbench task |
 | `tests/**`, `pytest.ini` | D: tests |
 | `analyze.py`, `tools/mock_results.py`, `results/**`, `figures/**` | E: analysis |
-Write only inside your own paths (plus `NOTES/<stream>.md`). Read anything.
+Write only inside your own paths (plus `docs/notes/<stream>.md`). Read anything.
 
 ## A -> B: source snapshots (`data/sources/`)
 - `manifest.json`: `{ "<name>": {"url": str, "file": str, "downloaded_at": "YYYY-MM-DD", "sha256": str} }`
@@ -101,7 +101,7 @@ E must also be able to generate this file synthetically via `tools/mock_results.
 
 # CONTRACT v2 (2026-09-26, after JUDGE-round1). Supersedes v1 where they conflict
 
-Read NOTES/JUDGE-round1.md. v2 fixes its blockers 1-14 and adopts most medium items. The design decisions below are final: implement them, do not relitigate them.
+Read docs/notes/JUDGE-round1.md. v2 fixes its blockers 1-14 and adopts most medium items. The design decisions below are final: implement them, do not relitigate them.
 
 ## Two-sided ground truth (the core change)
 

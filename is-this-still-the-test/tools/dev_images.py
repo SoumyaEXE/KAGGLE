@@ -3,10 +3,10 @@
 DEV's public API cannot upload images, so the images are uploaded once through the DEV editor
 ("Upload image" button), which returns https://dev-to-uploads.s3.amazonaws.com/... URLs.
 
-    python tools/dev_images.py prepare [post/dev_post_round1.md]
+    python tools/dev_images.py prepare [post/dev_post_final.md]
         Copies every image the post references (cover first, then in reading order) into
         post/dev_upload_<post>/NN-name.png and writes urls.txt there, one line per image.
-    python tools/dev_images.py fill [post/dev_post_round1.md]
+    python tools/dev_images.py fill [post/dev_post_final.md]
         Reads the URLs you pasted into urls.txt and writes <post>.dev.md with every
         <UPLOAD path> placeholder replaced. The source post keeps its placeholders.
 """
@@ -80,5 +80,5 @@ def fill(post):
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "prepare"
-    post = ROOT / (sys.argv[2] if len(sys.argv) > 2 else "post/dev_post_round1.md")
+    post = ROOT / (sys.argv[2] if len(sys.argv) > 2 else "post/dev_post_final.md")
     {"prepare": prepare, "fill": fill}[cmd](post)
