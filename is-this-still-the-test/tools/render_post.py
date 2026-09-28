@@ -23,6 +23,9 @@ def fmt(v):
 
 def render(tmpl):
     nums = json.loads((ROOT / "figures/final/numbers.json").read_text(encoding="utf-8"))
+    pilot = ROOT / "figures/pilot/numbers.json"  # round-2 pilot, once it has run
+    if pilot.exists():
+        nums.update(json.loads(pilot.read_text(encoding="utf-8")))
     text = tmpl.read_text(encoding="utf-8")
     missing = sorted({k for k in re.findall(r"\{\{(\w+)\}\}", text) if k not in nums})
     if missing:

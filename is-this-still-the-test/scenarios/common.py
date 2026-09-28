@@ -40,6 +40,18 @@ _ENCODER = None
 _ENCODER_TRIED = False
 
 
+def _tiktoken_cached() -> bool:
+    """True if tiktoken's cl100k_base table is already on disk (same lookup as tiktoken.load)."""
+    import hashlib
+    import os
+    import tempfile
+
+    url = "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"
+    cache_dir = (os.environ.get("TIKTOKEN_CACHE_DIR") or os.environ.get("DATA_GYM_CACHE_DIR")
+                 or os.path.join(tempfile.gettempdir(), "data-gym-cache"))
+    return os.path.exists(os.path.join(cache_dir, hashlib.sha1(url.encode()).hexdigest()))
+
+
 def approx_tokens(text: str) -> int:
     """Approximate token count.
 
@@ -53,7 +65,8 @@ def approx_tokens(text: str) -> int:
         try:  # pragma: no cover - depends on local tiktoken cache
             import tiktoken
 
-            _ENCODER = tiktoken.get_encoding("cl100k_base")
+            # get_encoding downloads the table when it isn't cached; only use it offline.
+            _ENCODER = tiktoken.get_encoding("cl100k_base") if _tiktoken_cached() else None
         except Exception:
             _ENCODER = None
     if _ENCODER is not None:

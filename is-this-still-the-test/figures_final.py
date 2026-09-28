@@ -244,6 +244,46 @@ def _p(p):
     return "10" + str(math.floor(math.log10(p)) + 1).translate(sup) if p < 1e-3 else f"{p:.2f}"
 
 
+def repeatability(v):
+    """Same model, same question, different run: how often does the answer repeat?"""
+    import itertools
+    pairs, flips = [], []
+    for lab, g in v.groupby("label"):
+        for a, b in itertools.combinations(sorted(g.run_key.unique()), 2):
+            j = (g[g.run_key == a].set_index("row_id")
+                 .join(g[g.run_key == b].set_index("row_id"), lsuffix="_a", rsuffix="_b", how="inner"))
+            j["act"], j["real"] = j.action_a.eq(j.action_b), j.says_real_a.eq(j.says_real_b)
+            pairs.append(dict(label=lab, n=len(j), act=j.act.mean()))
+            flips.append(j[["cond_a", "act", "real"]])
+    f = pd.concat(flips)
+    cond = f.groupby("cond_a")[["act", "real"]].mean()
+    flip = lambda c, k: _pct(1 - cond.loc[c, k])
+
+    real = v[v.says_real]
+    per_run = real.groupby(["label", "run_key"]).action.agg(n="size", s=lambda x: int(x.eq("stop").sum()))
+    per_run["pct"] = per_run.s / per_run.n
+    exceptions = per_run[per_run.pct <= 0.5].reset_index()
+    exc = ", ".join(f"{lab} ({' and '.join(_pct(p) for p in g.pct)})" for lab, g in exceptions.groupby("label"))
+
+    agree = pd.DataFrame(pairs).groupby("label").apply(lambda g: (g.act * g.n).sum() / g.n.sum())
+    lines = ["| Model | Complete runs | Silent Stop share, run by run | Same action on the same question |",
+             "|---|---|---|---|"]
+    runs_per = v.groupby("label").run_key.nunique()
+    for lab in agree.sort_values(ascending=False).index:
+        pct = per_run.pct.get(lab, pd.Series(dtype=float))
+        shares = " · ".join(_pct(pct[k]) if k in pct.index else "–"  # – : no answer called the host real
+                            for k in sorted(v[v.label == lab].run_key.unique()))
+        lines.append(f"| {lab} | {runs_per[lab]} | {shares} | {_pct(agree[lab])} |")
+    return dict(rep_models=len(agree), rep_pairs=len(pairs), rep_rows=f"{int(f.shape[0]):,}",
+                rep_act=_pct(f.act.mean()), rep_real=_pct(f.real.mean()),
+                rep_actflip_L0=flip("ladder_L0", "act"), rep_actflip_L4=flip("ladder_L4", "act"),
+                rep_realflip_L0=flip("ladder_L0", "real"), rep_realflip_placebo=flip("placebo", "real"),
+                rep_realflip_L1=flip("ladder_L1", "real"), rep_realflip_idreal=flip("identity_real", "real"),
+                rep_realflip_L4=flip("ladder_L4", "real"),
+                silent_runs=len(per_run), silent_runs_major=int((per_run.pct > 0.5).sum()),
+                silent_runs_exc=exc or "none", repeat_table="\n".join(lines))
+
+
 def numbers(v):
     """Every data-derived fact the post quotes, recomputed from the pooled panel."""
     import re
@@ -324,6 +364,7 @@ def numbers(v):
     cells = v.groupby(["label", "cond"]).size()
     n.update(gap_L4=round(100 * (real("ladder_L4") - rep_rate(by("ladder_L4")))),
              cell_min=int(cells.min()), cell_max=int(cells.max()))
+    n.update(repeatability(v))
     n["runs_log"] = (OUT / "runs.md").read_text(encoding="utf-8") if (OUT / "runs.md").exists() else ""
     return n
 
