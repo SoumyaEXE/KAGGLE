@@ -43,7 +43,7 @@ def main():
     ap.add_argument("--a", default="figures/round1/scorecard.json")
     ap.add_argument("--b", default="figures/rerun/scorecard.json")
     ap.add_argument("--label-a", default="Round 1 (2026-09-26)")
-    ap.add_argument("--label-b", default="Kaggle rerun (2026-09-27)")
+    ap.add_argument("--label-b", default="Latest Kaggle run")
     ap.add_argument("--out", default="figures/rerun/fig14_replication.png")
     a = ap.parse_args()
     ra = {t["model"]: t for t in json.load(open(a.a, encoding="utf-8"))["table"]}
@@ -81,10 +81,10 @@ def main():
     ax.scatter([], [], s=58, color=A.SURFACE, edgecolor=A.BLUE, linewidth=1.6, label=a.label_a)
     ax.scatter([], [], s=58, color=A.BLUE, label=a.label_b)
     ax.legend(loc="lower right", frameon=False, fontsize=9.5)
-    A.SOURCE = "Source: Is This Still the Test?, same 96 rows asked twice on Kaggle Benchmarks. "
+    A.SOURCE = "Source: Is This Still the Test?, same 96 rows asked on different days on Kaggle Benchmarks. "
     A.finish(fig, ax, "Same questions, asked again: does the ranking hold?",
-             f"Overall score in two independent runs; lines = story-bootstrap 95% intervals. "
-             f"Rank correlation between runs: Spearman ρ = {rho:.2f} ({len(both)} models).",
+             f"First run vs latest run of the same 96 rows; lines = 95% intervals. "
+             f"Spearman ρ = {rho:.2f} ({len(both)} models).",
              a.out, ci=False)
 
 

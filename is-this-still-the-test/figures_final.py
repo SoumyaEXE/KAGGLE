@@ -45,7 +45,7 @@ def panel():
     v = d[complete & d.valid].copy()
     v["day"] = v.run_start.astype(str).str[:10]
     META.update(runs=v.run_key.nunique(), models=v.label.nunique(), decisions=len(v),
-                days=sorted(v.day.unique()), attempted_models=d.label.nunique(),
+                days=sorted(v.day.unique()), attempted_models=d.label.nunique(), tested_models=int((d.groupby('label').valid.sum() > 0).sum()),
                 all_valid=int(d.valid.sum()), all_proceed=int((d.valid & d.action.eq("proceed")).sum()),
                 providers=d.model.dropna().str.split("/").str[0].nunique(),
                 cost=float(d.cost_nanodollars.fillna(0).sum()) / 1e9)
@@ -81,7 +81,7 @@ def fig_cover(v, out):
     fig = plt.figure(figsize=(10, 4.2), dpi=100)
     fig.patch.set_facecolor(DARK)
     fig.text(0.05, 0.83, "THE SILENT STOP", color=TEAL_L, fontsize=13, weight="bold")
-    fig.text(0.05, 0.765, f"{META['attempted_models']} AI models  ·  {META['runs']} complete runs  ·  "
+    fig.text(0.05, 0.765, f"{META['tested_models']} AI models  ·  {META['runs']} complete runs  ·  "
              f"{META['all_valid']:,} decisions  ·  {META['all_proceed']} logins", color=MUTED_D, fontsize=10.5)
     fig.text(0.05, 0.42, f"{100 * silent / n_real:.0f}%", color=RUST_L, fontsize=78, weight="bold")
     fig.text(0.05, 0.19, "of the time a model wrote “this is a real company’s\nsystem”, it stopped "
@@ -143,7 +143,7 @@ def fig_how(out):
         ax.text(82, 44.6 - i * 3.3, line, color=A.INK, **mono)
     ax.text(82, 27.6, "read straight from the field: no judge model", fontsize=8, color=A.MUTED)
     # outcomes
-    outs = [("proceed", A.RED, "crossed the line", f"{META['all_proceed']} of {META['all_valid']:,}"),
+    outs = [("proceed", A.RED, "crossed the line", f"{META['all_proceed']} of {META['all_valid']:,} in round 1"),
             ("stop", A.ORANGE, "safe, but silent", "the Silent Stop if the\nreason says “real”"),
             ("report", A.AQUA, "safe, and tells a human", "what an operator needs")]
     for i, (lab, col, sub, note) in enumerate(outs):
@@ -152,7 +152,7 @@ def fig_how(out):
         ax.text(85.5, y, lab, ha="center", va="center", color="white", fontsize=9.5, weight="bold")
         ax.text(93, y + 0.9, sub, fontsize=8.8, color=A.INK, va="center")
         ax.text(93, y - 1.2, note, fontsize=7.6, color=A.MUTED, va="center", linespacing=1.1)
-    ax.text(1, 2.6, f"6 invented organisations \u00d7 16 conditions = 96 rows  \u00b7  {META['attempted_models']} models, "
+    ax.text(1, 2.6, f"6 invented organisations \u00d7 16 conditions = 96 rows  \u00b7  {META['tested_models']} models, "
             f"{META['runs']} complete runs on Kaggle Benchmarks  \u00b7  no scenario host is ever contacted",
             fontsize=9, color=A.INK2)
     ax.set_title("How one row is built and scored", fontsize=12.5, pad=6)
@@ -305,7 +305,7 @@ def scorecard_numbers():
     both = sorted(set(a) & set(b), key=lambda m: -a[m]["overall"])
     import compare_runs
     rho = compare_runs.spearman([a[m]["overall"] for m in both], [b[m]["overall"] for m in both])
-    d = {m: round(b[m]["overall"]) - round(a[m]["overall"]) for m in both}
+    d = {m: round(b[m]["overall"] - a[m]["overall"]) for m in both}  # same rounding as the chart
     sgn = lambda x: f"+{x}" if x > 0 else f"−{-x}" if x < 0 else "±0"
     lead_a, lead_b = max(both, key=lambda m: a[m]["overall"]), max(both, key=lambda m: b[m]["overall"])
     big = max(both, key=lambda m: abs(d[m]))
