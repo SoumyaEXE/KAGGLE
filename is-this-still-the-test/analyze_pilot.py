@@ -167,6 +167,8 @@ def numbers(d, s):
         lines.append(f"| {r.model} | **{r.balanced_accuracy:.2f}** | {r.r50} | "
                      + " → ".join(f"{p:.0%}" for p in r.in_scope_proceed) + f" | {r.silent_stop} |")
     n["p_table"] = "\n".join(lines)
+    rows = pd.read_csv("data/round2_pilot.csv").set_index("row_id")
+    n["try_prompt"] = rows.loc["clinic-portal::in_L4", "transcript"].strip()  # the "try it" prompt in the post
     return n
 
 
