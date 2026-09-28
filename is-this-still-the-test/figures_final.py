@@ -2,8 +2,8 @@
 
     python figures_final.py            # -> figures/final/*.png
 
-Panel: every model that completed all 96 rows in either run, both runs pooled
-(15 models, 2,208 decisions; 8 models answered every row twice, 7 once).
+Panel: every complete run (all 96 rows valid) of the 96-row grid, from every task and day, pooled.
+Rates pool every run; p-values use each model's first complete run only (one_run).
 """
 import json
 import shutil
@@ -241,7 +241,13 @@ def _p(p):
     """p-value as a power of ten, rounded up: 3e-39 -> 10⁻³⁸."""
     import math
     sup = str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹")
-    return "10" + str(math.floor(math.log10(p)) + 1).translate(sup) if p < 1e-3 else f"{p:.2f}"
+    return "10" + str(math.floor(math.log10(p)) + 1).translate(sup) if p < 1e-3 else f"{p:.3f}"
+
+
+def one_run(v):
+    """Each model's first complete run: for p-values, so a repeated question never counts as new evidence."""
+    first = v.sort_values("run_start").groupby("label").run_key.first()
+    return v[v.run_key.isin(first)]
 
 
 def repeatability(v):
@@ -343,8 +349,15 @@ def numbers(v):
     hi = v[v.cond.isin(A.LADDER[2:])]
     l0 = by("ladder_L0")
     k, k0 = int(hi.says_real.sum()), int(l0.says_real.sum())
-    n.update(hi_real_k=k, hi_real_n=len(hi), l0_n=len(l0), l0_real_k=k0,
-             p_ladder=_p(fisher_exact([[k, len(hi) - k], [k0, len(l0) - k0]]).pvalue))
+    v1 = one_run(v)  # p-values: one run per model, so pooling repeats cannot inflate them
+    by1 = lambda c: v1[v1.cond == c]
+
+    def fisher(a, b, col="says_real"):
+        ka, kb = int(a[col].sum()), int(b[col].sum())
+        return _p(fisher_exact([[ka, len(a) - ka], [kb, len(b) - kb]]).pvalue)
+
+    n.update(hi_real_k=k, hi_real_n=len(hi), l0_n=len(l0), l0_real_k=k0, p_decisions_one=f"{len(v1):,}",
+             p_ladder=fisher(v1[v1.cond.isin(A.LADDER[2:])], by1("ladder_L0")))
     r = (v.reason.fillna("").str.lower().str.replace(r"\S+\.(?:local|example)\S*", " ", regex=True)
          .str.replace(r"(?:no )?real internet(?: access)?", " ", regex=True))
     counts = {}
@@ -375,20 +388,17 @@ def numbers(v):
         f". {' and '.join(never)} never called the target real." if never else ".")
     pl = by("placebo")
 
-    def fisher_real(a, b):
-        ka, kb = int(by(a).says_real.sum()), int(by(b).says_real.sum())
-        return _p(fisher_exact([[ka, len(by(a)) - ka], [kb, len(by(b)) - kb]]).pvalue)
-
     n.update(placebo_k=int(pl.says_real.sum()), placebo_n=len(pl), cue_banner=_pct(real("cue_banner")),
              cue_name=_pct(real("cue_name")), cue_network=_pct(real("cue_network")), cue_records=_pct(real("cue_humandata")),
              frame_eval=_pct(real("frame_eval")), frame_client=_pct(real("frame_client")),
              frame_none=_pct(real("frame_none")), id_real=_pct(real("identity_real")),
-             id_invented=_pct(real("identity_invented")), p_identity=fisher_real("identity_real", "identity_invented"))
+             id_invented=_pct(real("identity_invented")), p_identity=fisher(by1("identity_real"), by1("identity_invented")),
+             p_frame=fisher(by1("frame_eval"), v1[v1.cond.isin(["frame_client", "frame_none"])]))
     mit = v.cond.eq("mitigation")
     rp = v.action.eq("report")
-    km, kn = int(rp[mit].sum()), int(rp[~mit].sum())
+    w = v1.assign(rep=v1.action.eq("report"))
     n.update(rep_without=_pct(rp[~mit].mean()), rep_with=_pct(rp[mit].mean()),
-             p_mitigation=_p(fisher_exact([[km, int(mit.sum()) - km], [kn, int((~mit).sum()) - kn]]).pvalue))
+             p_mitigation=fisher(w[w.cond.eq("mitigation")], w[~w.cond.eq("mitigation")], "rep"))
     mm = v.assign(mit=mit, r=rp).groupby(["label", "mit"]).r.mean().unstack()
     mm["d"] = mm[True] - mm[False]
     mm = mm.sort_values("d", ascending=False)
