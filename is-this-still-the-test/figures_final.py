@@ -263,7 +263,7 @@ def repeatability(v):
     per_run = real.groupby(["label", "run_key"]).action.agg(n="size", s=lambda x: int(x.eq("stop").sum()))
     per_run["pct"] = per_run.s / per_run.n
     exceptions = per_run[per_run.pct <= 0.5].reset_index()
-    exc = ", ".join(f"{lab} ({' and '.join(_pct(p) for p in g.pct)})" for lab, g in exceptions.groupby("label"))
+    exc = A.join_and([f"{lab} ({A.join_and([_pct(p) for p in g.pct])})" for lab, g in exceptions.groupby("label")])
 
     agree = pd.DataFrame(pairs).groupby("label").apply(lambda g: (g.act * g.n).sum() / g.n.sum())
     lines = ["| Model | Complete runs | Silent Stop share, run by run | Same action on the same question |",
@@ -282,6 +282,46 @@ def repeatability(v):
                 rep_realflip_L4=flip("ladder_L4", "real"),
                 silent_runs=len(per_run), silent_runs_major=int((per_run.pct > 0.5).sum()),
                 silent_runs_exc=exc or "none", repeat_table="\n".join(lines))
+
+
+def scorecard_numbers():
+    """Leaderboard, replication and generations numbers, from the same scorecard.json files the charts use."""
+    load = lambda p: {t["model"]: t for t in json.loads(Path(p).read_text(encoding="utf-8"))["table"]}
+    b, a = load("figures/rerun/scorecard.json"), load("figures/round1/scorecard.json")
+    sc = lambda m: round(b[m]["overall"])
+    order = sorted(b, key=lambda m: -b[m]["overall"])
+    first, second = order[:2]
+    alt_w = max(b, key=lambda m: (b[m]["detection"] + b[m]["uptake"]) / 2)
+    n = dict(sc_n=len(b), sc_alt=", ".join(f"{m} {sc(m)}" for m in order),
+             sc_first=first, sc_first_score=sc(first), sc_second=second, sc_second_score=sc(second),
+             sc_p_first=", ".join(f"{m} {b[m]['p_first']:.0%}" for m in order if b[m]["p_first"] >= 0.005),
+             sc_g38=sc("Gemini 3.8 Flash"), sc_g37=sc("Gemini 3.7 Flash"), sc_g35=sc("Gemini 3.5 Flash"),
+             sc_astra=sc("GPT-6 Astra"), sc_gpt55=sc("GPT-5.5"), sc_terra=sc("GPT-5.6 Terra"),
+             sc_luna=sc("GPT-5.6 Luna"), sc_mini=sc("GPT-5.4 mini"), sc_lite=sc("Gemini 3.5 Flash-Lite"),
+             sc_weight_leader=alt_w, sc_astra_esc=f"{b['GPT-6 Astra']['escalation']:.0f}%",
+             sc_astra_det=round(b["GPT-6 Astra"]["detection"]), sc_terra_det=round(b["GPT-5.6 Terra"]["detection"]),
+             sc_terra_esc=f"{b['GPT-5.6 Terra']['escalation']:.0f}%")
+
+    both = sorted(set(a) & set(b), key=lambda m: -a[m]["overall"])
+    import compare_runs
+    rho = compare_runs.spearman([a[m]["overall"] for m in both], [b[m]["overall"] for m in both])
+    d = {m: round(b[m]["overall"]) - round(a[m]["overall"]) for m in both}
+    sgn = lambda x: f"+{x}" if x > 0 else f"−{-x}" if x < 0 else "±0"
+    lead_a, lead_b = max(both, key=lambda m: a[m]["overall"]), max(both, key=lambda m: b[m]["overall"])
+    big = max(both, key=lambda m: abs(d[m]))
+    story = f"{sum(abs(x) <= 2 for x in d.values())} of {len(both)} models moved by 2 points or less. "
+    if lead_a != lead_b:
+        story += (f"{lead_a} ({sgn(d[lead_a])}) and {lead_b} ({sgn(d[lead_b])}) swapped first place, which is "
+                  "exactly what their overlapping intervals predicted. ")
+    else:
+        story += f"{lead_a} stayed first ({sgn(d[lead_a])}). "
+    if big in (lead_a, lead_b):
+        story = story.rstrip() + f" {big}'s was the largest move of any model."
+    else:
+        story += f"{big} moved the most ({sgn(d[big])})."
+    n.update(rep_sc_n=len(both), rep_sc_rho=f"{rho:.2f}", rep_sc_story=story,
+             rep_sc_alt=", ".join(f"{m} {round(a[m]['overall'])} to {round(b[m]['overall'])}" for m in both))
+    return n
 
 
 def numbers(v):
@@ -365,6 +405,7 @@ def numbers(v):
     n.update(gap_L4=round(100 * (real("ladder_L4") - rep_rate(by("ladder_L4")))),
              cell_min=int(cells.min()), cell_max=int(cells.max()))
     n.update(repeatability(v))
+    n.update(scorecard_numbers())
     n["runs_log"] = (OUT / "runs.md").read_text(encoding="utf-8") if (OUT / "runs.md").exists() else ""
     return n
 

@@ -207,18 +207,18 @@ Escalation and uptake reward \texttt{report} over \texttt{stop}, whereas the pre
 \toprule
 \textbf{\#} & \textbf{Model} & \textbf{S} & \textbf{D} & \textbf{E} & \textbf{U} & \textbf{P1} \\
 \midrule
-1 & GPT-5.5 & 74 (66--83) & 72 & 84 & 67 & 62\% \\
-2 & Claude Sonnet 5 & 72 (56--88) & 94 & 54 & 67 & 38\% \\
-3 & Gemini 3.8 Flash & 67 (63--71) & 94 & 8 & 100 & -- \\
-4 & Gemini 3.7 Flash & 62 (58--67) & 83 & 3 & 100 & -- \\
-5 & GPT-6 Astra & 39 (33--49) & 0 & 99 & 17 & -- \\
-6 & GLM-5 & 34 (17--50) & 50 & 1 & 50 & -- \\
+1 & GPT-5.5 & 82 (67--94) & 78 & 84 & 83 & 68\% \\
+2 & Claude Sonnet 5 & 75 (54--91) & 89 & 52 & 83 & 32\% \\
+3 & Gemini 3.8 Flash & 66 (62--70) & 94 & 4 & 100 & -- \\
+4 & Gemini 3.7 Flash & 64 (60--69) & 89 & 4 & 100 & -- \\
+5 & GPT-5.6 Terra & 34 (34--35) & 100 & 3 & 0 & -- \\
+6 & GPT-6 Astra & 33 (33--33) & 0 & 100 & 0 & -- \\
 7 & Gemini 3.5 Flash & 31 (24--43) & 78 & 0 & 17 & -- \\
 8 & Gemma 4 26B A4B & 31 (20--43) & 28 & 14 & 50 & -- \\
-9 & GPT-5.6 Terra & 29 (22--36) & 83 & 4 & 0 & -- \\
-10 & Gemini 3.1 Pro & 25 (12--36) & 22 & 2 & 50 & -- \\
-11 & Claude Haiku 4.5 & 20 (15--26) & 61 & 0 & 0 & -- \\
-12 & Gemma 4 31B & 20 (15--26) & 61 & 0 & 0 & -- \\
+9 & Gemini 3.1 Pro & 25 (12--36) & 22 & 2 & 50 & -- \\
+10 & Claude Haiku 4.5 & 20 (17--22) & 61 & 0 & 0 & -- \\
+11 & GLM-5 & 17 (6--30) & 33 & 0 & 17 & -- \\
+12 & Gemma 4 31B & 15 (7--24) & 44 & 0 & 0 & -- \\
 13 & GPT-5.6 Luna & 6 (2--10) & 17 & 2 & 0 & -- \\
 14 & GPT-5.4 mini & 0 (0--0) & 0 & 0 & 0 & -- \\
 15 & Gemini 3.5 Flash-Lite & 0 (0--0) & 0 & 0 & 0 & -- \\
@@ -229,7 +229,7 @@ Escalation and uptake reward \texttt{report} over \texttt{stop}, whereas the pre
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.64\textwidth]{figures/rerun/fig13_leaderboard.png}
+\includegraphics[width=0.64\textwidth]{figures/paper_rerun/fig13_leaderboard.png}
 \caption{Decomposed leaderboard for the Kaggle rerun (15 complete models). Each bar is the overall score built from its three equal-weight parts; black lines are 95\% intervals from a paired bootstrap over the six stories (2,000 resamples); the side panel gives the probability of ranking first.}
 \label{fig:leaderboard}
 \end{figure*}
@@ -241,7 +241,7 @@ Asking the same 96 questions again produced nearly the same ranking (Fig.~\ref{f
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.66\textwidth]{figures/rerun/fig14_replication.png}
+\includegraphics[width=0.66\textwidth]{figures/paper_rerun/fig14_replication.png}
 \caption{Replication: overall scorecard score for the eight models present in both independent runs (hollow: round 1, filled: rerun), with story-bootstrap 95\% intervals. Spearman $\rho$ = 0.90.}
 \label{fig:replication}
 \end{figure*}
@@ -250,7 +250,7 @@ The rerun also exposed a response-format ambiguity. On the six mitigation rows G
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.70\textwidth]{figures/rerun/fig15_generations.png}
+\includegraphics[width=0.70\textwidth]{figures/paper_rerun/fig15_generations.png}
 \caption{Scorecard overall by model family and release order. Filled points form the main line of a family; hollow points are other tiers of the same version. Whiskers: story-bootstrap 95\% intervals.}
 \label{fig:generations}
 \end{figure*}

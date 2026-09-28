@@ -19,6 +19,22 @@ def run(*cmd):
     subprocess.run([sys.executable, *cmd], cwd=ROOT, check=True)
 
 
+PAPER_DAY = "2026-09-27"  # the paper describes round 1 + the first rerun; the post uses every run
+
+
+def paper_snapshot():
+    """Scorecard, replication and generations charts from the paper's rerun day only (figures/paper_rerun)."""
+    import pandas as pd
+    d = pd.read_csv(ROOT / "results/rerun/all_runs_raw.csv")
+    out = ROOT / "results/paper_rerun"
+    out.mkdir(parents=True, exist_ok=True)
+    d[d.run_start.astype(str).str.startswith(PAPER_DAY)].to_csv(out / "all_runs_raw.csv", index=False)
+    run("scorecard.py", "--in", "results/paper_rerun/all_runs_raw.csv", "--out", "figures/paper_rerun",
+        "--round", "1 (Kaggle rerun)", "--source", "Source: Is This Still the Test? scorecard task, fresh Kaggle runs.")
+    run("compare_runs.py", "--b", "figures/paper_rerun/scorecard.json", "--out", "figures/paper_rerun/fig14_replication.png")
+    run("generations.py", "--in", "figures/paper_rerun/scorecard.json", "--out", "figures/paper_rerun/fig15_generations.png")
+
+
 def main():
     for task, out in TASKS.items():
         if (ROOT / "results/raw" / task).exists():
@@ -31,6 +47,7 @@ def main():
         "--source", "Source: Is This Still the Test? scorecard task, fresh Kaggle runs.")
     run("compare_runs.py")
     run("generations.py")
+    paper_snapshot()
     run("figures_final.py")
     if (ROOT / "results/pilot/all_runs_raw.csv").exists():
         run("analyze_pilot.py")

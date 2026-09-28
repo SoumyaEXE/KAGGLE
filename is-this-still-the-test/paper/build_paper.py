@@ -232,7 +232,7 @@ def tex(text, _top=True):
 
 # ------------------------------------------------------------------ dynamic table: scorecard
 def scorecard_table():
-    res = json.loads((ROOT / "figures/rerun/scorecard.json").read_text(encoding="utf-8"))
+    res = json.loads((ROOT / "figures/paper_rerun/scorecard.json").read_text(encoding="utf-8"))
     rows = []
     for t in res["table"]:
         lo, hi = t["ci"]["overall"]

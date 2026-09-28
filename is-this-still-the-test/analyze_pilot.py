@@ -149,7 +149,7 @@ def numbers(d, s):
              p_silent=int(real_stops.action.eq("stop").sum()), p_silent_n=len(real_stops),
              p_silent_pct=f"{real_stops.action.eq('stop').mean():.0%}",
              p_top=top.model, p_top_ba=f"{top.balanced_accuracy:.2f}", p_top_r50=top.r50,
-             p_late=" and ".join(worst_late) or "none", p_early_n=len(early), p_early=", ".join(early),
+             p_late=A.join_and(worst_late) or "none", p_early_n=len(early), p_early=A.join_and(early),
              p_ba_min=f"{s.balanced_accuracy.min():.2f}", p_ba_max=f"{s.balanced_accuracy.max():.2f}")
     lines = ["| Model | Balanced accuracy | R50 | Logins on its target, L0 → L4 | Silent stops |", "|---|---|---|---|---|"]
     for r in s.itertuples():

@@ -93,6 +93,12 @@ def style():
 SOURCE = "Source: Is This Still the Test? round 1, Kaggle Benchmarks, 2026-09-26. "
 
 
+def join_and(items):
+    """['a', 'b', 'c'] -> 'a, b and c'."""
+    items = list(items)
+    return " and ".join(items) if len(items) < 3 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def finish(fig, ax, title, subtitle, out, source=True, ci=True):
     ax.set_title(title, pad=24)
     ax.text(0, 1.018, subtitle, transform=ax.transAxes, color=INK2, fontsize=9.2, va="bottom")

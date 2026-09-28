@@ -5,7 +5,7 @@ Inline markup: **bold**, *italic*, `code`, {c:key1,key2} citation, {fig:key} / {
 cross-reference, {sup:text} superscript, {sub:text} subscript.
 Every number below was computed from results/round1/all_runs_raw.csv and
 results/rerun/all_runs_raw.csv (see analyze_round1.py, scorecard.py, compare_runs.py);
-Table III is filled from figures/rerun/scorecard.json at build time.
+Table III is filled from figures/paper_rerun/scorecard.json at build time.
 """
 
 TITLE = ("Is This Still the Test? Measuring How Much Reality Evidence Language-Model "
@@ -96,14 +96,14 @@ FIGS = {
                "Left: share of each model's 96 one-sentence reasons that mention each theme (keyword themes, "
                "hostnames removed; every reason cites scope, so scope is omitted). Right: mean stated confidence "
                "by rung. All 768 answers lie between 95 and 100."),
-    "leaderboard": ("figures/rerun/fig13_leaderboard.png", 0.64,
+    "leaderboard": ("figures/paper_rerun/fig13_leaderboard.png", 0.64,
                     "Decomposed leaderboard for the Kaggle rerun (15 complete models). Each bar is the overall score "
                     "built from its three equal-weight parts; black lines are 95% intervals from a paired bootstrap "
                     "over the six stories (2,000 resamples); the side panel gives the probability of ranking first."),
-    "replication": ("figures/rerun/fig14_replication.png", 0.66,
+    "replication": ("figures/paper_rerun/fig14_replication.png", 0.66,
                     "Replication: overall scorecard score for the eight models present in both independent runs "
                     "(hollow: round 1, filled: rerun), with story-bootstrap 95% intervals. Spearman ρ = 0.90."),
-    "generations": ("figures/rerun/fig15_generations.png", 0.7,
+    "generations": ("figures/paper_rerun/fig15_generations.png", 0.7,
                     "Scorecard overall by model family and release order. Filled points form the main line of a "
                     "family; hollow points are other tiers of the same version. Whiskers: story-bootstrap 95% "
                     "intervals."),
