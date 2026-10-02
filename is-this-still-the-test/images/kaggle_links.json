@@ -1,0 +1,22 @@
+{
+  "benchmark_page": {
+    "url": "",
+    "shot": "kaggle.com/benchmarks/soumyaexe/is-this-still-the-test: the benchmark page with both tasks and the leaderboard",
+    "where": "How it runs on Kaggle Benchmarks, before the kaggle b t run command"
+  },
+  "task_runs": {
+    "url": "",
+    "shot": "The reality-threshold-scorecard task's Runs tab: one row per model per daily run",
+    "where": "How it runs on Kaggle Benchmarks, after the kaggle b t status command"
+  },
+  "round2_leaderboard": {
+    "url": "",
+    "shot": "The itst-round2-pilot task's leaderboard",
+    "where": "Round 2, before point 3 (the leaderboard turns upside down)"
+  },
+  "transcript": {
+    "url": "",
+    "shot": "One round-2 run opened on Kaggle: the prompt and the model's JSON answer (clinic-portal L4 is best)",
+    "where": "Try it on your favourite model, after the prompt"
+  }
+}

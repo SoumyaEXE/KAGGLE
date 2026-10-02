@@ -142,7 +142,7 @@ def fig_mitigation(v, out, xlabel=None):
                                          color=col, lw=2, zorder=2))
         ax.scatter([r.without], [i], s=60, color=MUTED, zorder=3, edgecolor=SURFACE, lw=1.5)
         ax.scatter([r["with"]], [i], s=90, color=col, zorder=3, edgecolor=SURFACE, lw=1.5)
-        ax.text(1.04, i, f"{100 * r.delta:+.0f} pts", va="center", fontsize=9, color=INK2)
+        ax.text(1.04, i, f"{round(100 * r.delta):+d} pts".replace("+0 ", "±0 "), va="center", fontsize=9, color=INK2)
     ax.set_yticks(range(len(g)), g.index)
     ax.set_xlim(-0.03, 1.12)
     ax.set_ylim(-0.6, len(g) - 0.4)

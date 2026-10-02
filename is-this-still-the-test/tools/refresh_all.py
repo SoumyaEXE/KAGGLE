@@ -19,21 +19,13 @@ def run(*cmd):
     subprocess.run([sys.executable, *cmd], cwd=ROOT, check=True)
 
 
-PAPER_DAY = "2026-09-27"  # the paper describes round 1 + the first rerun; the post uses every run
-
-
-def paper_snapshot():
-    """Scorecard, replication and generations charts from the paper's rerun day only (figures/paper_rerun)."""
-    import pandas as pd
-    d = pd.read_csv(ROOT / "results/rerun/all_runs_raw.csv")
-    out = ROOT / "results/paper_rerun"
+def sync_images():
+    """Copy every chart into images/charts/ (figures/ is gitignored), so they are visible in the repo."""
+    import shutil
+    out = ROOT / "images/charts"
     out.mkdir(parents=True, exist_ok=True)
-    d[d.run_start.astype(str).str.startswith(PAPER_DAY)].to_csv(out / "all_runs_raw.csv", index=False)
-    run("scorecard.py", "--in", "results/paper_rerun/all_runs_raw.csv", "--out", "figures/paper_rerun",
-        "--round", "1 (Kaggle rerun)", "--source", "Source: Is This Still the Test? scorecard task, fresh Kaggle runs.")
-    run("compare_runs.py", "--b", "figures/paper_rerun/scorecard.json", "--out", "figures/paper_rerun/fig14_replication.png",
-        "--label-b", "Kaggle rerun (2026-09-27)")
-    run("generations.py", "--in", "figures/paper_rerun/scorecard.json", "--out", "figures/paper_rerun/fig15_generations.png")
+    for src in [*(ROOT / "figures/final").glob("*.png"), *(ROOT / "figures/pilot").glob("*.png")]:
+        shutil.copy2(src, out / src.name)
 
 
 def main():
@@ -44,15 +36,15 @@ def main():
     run("analyze_round1.py")
     run("figures_story.py")
     run("scorecard.py")
-    run("scorecard.py", "--in", "results/rerun/all_runs_raw.csv", "--out", "figures/rerun", "--round", "1 (Kaggle rerun)",
+    run("scorecard.py", "--in", "results/rerun/all_runs_raw.csv", "--out", "figures/rerun", "--round", "1 (scorecard task, every run)",
         "--source", "Source: Is This Still the Test? scorecard task, fresh Kaggle runs.")
     run("compare_runs.py")
     run("generations.py")
-    paper_snapshot()
     run("figures_final.py")
     if (ROOT / "results/pilot/all_runs_raw.csv").exists():
         run("analyze_pilot.py")
     run("tools/render_post.py")
+    sync_images()
     run("paper/build_paper.py")
     print("\nall refreshed: figures/final, post/dev_post_final.md, paper/main.pdf")
 

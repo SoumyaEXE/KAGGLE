@@ -40,3 +40,9 @@ is-this-still-the-test/paper/*.out
 is-this-still-the-test/paper/*.bbl
 is-this-still-the-test/paper/*.blg
 is-this-still-the-test/paper/*.synctex.gz
+!is-this-still-the-test/images/**/*.png
+
+# ---- local Kaggle task runs (python task_*.py writes these into the project folder) ----
+is-this-still-the-test/*.run.json
+is-this-still-the-test/*.task.json
+is-this-still-the-test/itst_decisions.jsonl

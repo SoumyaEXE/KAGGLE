@@ -232,7 +232,7 @@ def tex(text, _top=True):
 
 # ------------------------------------------------------------------ dynamic table: scorecard
 def scorecard_table():
-    res = json.loads((ROOT / "figures/paper_rerun/scorecard.json").read_text(encoding="utf-8"))
+    res = json.loads((ROOT / "figures/rerun/scorecard.json").read_text(encoding="utf-8"))
     rows = []
     for t in res["table"]:
         lo, hi = t["ci"]["overall"]
@@ -242,12 +242,48 @@ def scorecard_table():
     note = ("S: overall (95% interval). D: reality detection; E: escalation; U: instruction uptake; all 0–100. "
             "Boundary hold is 100 for every model. P1: probability of ranking first (paired story bootstrap, "
             f"{res['draws']} resamples). Did not finish: " + "; ".join(f"{d['model']} ({d['valid']}/96)" for d in res["dnf"]) + ".")
-    return ("Scorecard of the Kaggle Rerun", ["#", "Model", "S", "D", "E", "U", "P1"], rows,
-            [0.06, 0.37, 0.22, 0.08, 0.08, 0.08, 0.11], note)
+    return ("Round-1 Scorecard (Scorecard Task, All Complete Runs Pooled)", ["#", "Model", "S", "D", "E", "U", "P1"],
+            rows, [0.06, 0.37, 0.22, 0.08, 0.08, 0.08, 0.11], note)
+
+
+def models_table():
+    """Per model: complete round-1 runs, valid round-1 answers, complete round-2 pilot runs."""
+    sys.path.insert(0, str(ROOT))
+    import figures_final as F
+    import analyze_pilot as P
+    d = F._all_rows()
+    key = ["task", "model_dir", "task_version", "run_id"]
+    d["run_key"] = d[key].astype(str).agg(":".join, axis=1)
+    ok = d.groupby("run_key").valid.transform("sum").eq(96)
+    r1 = pd.DataFrame({"runs": d[ok].groupby("label").run_key.nunique(), "valid": d.groupby("label").valid.sum()})
+    r1 = r1.fillna(0).astype(int)
+    pilot = P.load(str(ROOT / "results/pilot/all_runs_raw.csv")).groupby("label").run_id.nunique()
+    rows = []
+    for m, t in r1.sort_values(["runs", "valid"], ascending=False).iterrows():
+        rows.append([m, str(t.runs) if t.runs else "–", f"{t.valid:,}", str(pilot.get(m, "–"))])
+    note = ("R1 runs: complete 96-row runs of the round-1 grid (both tasks). Valid: parsed round-1 answers, including "
+            "partial runs. R2 runs: complete 78-row runs of the round-2 pilot. Models with no complete run failed for "
+            "infrastructure reasons only: quota exhaustion (HTTP 403), rate limits (HTTP 429), unknown model (HTTP 404) "
+            "or, for Qwen3 Next 80B Thinking, one empty reply in 96.")
+    return ("Models, Runs and Valid Decisions", ["Model", "R1 runs", "Valid", "R2 runs"], rows,
+            [0.52, 0.15, 0.18, 0.15], note)
+
+
+def round2_table():
+    s = json.loads((ROOT / "figures/pilot/summary.json").read_text(encoding="utf-8"))
+    rows = [[t["model"], f"{t['balanced_accuracy']:.2f}", t["r50"],
+             " ".join(f"{100 * p:.0f}" for p in t["in_scope_proceed"]), t["silent_stop"]] for t in s]
+    note = ("BA: balanced accuracy. R50: first rung at which the login rate on the assigned target falls below 50% "
+            "(correct: L2). L0–L4: percentage of answers that logged in to the assigned target at each rung. "
+            "Silent: stops without a report among answers whose reason calls the host real.")
+    return ("Round-2 Pilot, In-Scope Arm", ["Model", "BA", "R50", "L0–L4 login %", "Silent"], rows,
+            [0.33, 0.1, 0.1, 0.3, 0.17], note)
 
 
 TABLES = dict(C.TABLES)
 TABLES["scorecard"] = scorecard_table()
+TABLES["models"] = models_table()
+TABLES["round2"] = round2_table()
 
 
 def table_parts(key):
@@ -305,7 +341,7 @@ class IEEEDoc(BaseDocTemplate):
                                           onPage=self._make_onpage([key])))
         for a, b in zip(order, order[1:]):  # two consecutive floats may share a page top
             used = self.geom[a][5] + self.geom[b][5]
-            if used <= 0.78 * TEXT_H:
+            if used <= 0.86 * TEXT_H:
                 self.pairs.add((a, b))
                 templates.append(PageTemplate(f"fig_{a}+{b}", [col(LM, TEXT_H - used), col(LM + COL_W + GAP, TEXT_H - used)],
                                               onPage=self._make_onpage([a, b])))
@@ -406,7 +442,7 @@ def build_story(doc):
 
 
 def transcript_text(row_id, width=64):
-    s = pd.read_csv(ROOT / "data/scenarios.csv")
+    s = pd.read_csv(ROOT / ("data/round2_pilot.csv" if "::in_" in row_id or "::out_" in row_id else "data/scenarios.csv"))
     t = s.loc[s.row_id == row_id, "transcript"].iloc[0]
     out = []
     for line in t.splitlines():
