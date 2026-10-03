@@ -82,6 +82,8 @@ In-scope balanced accuracy (logins on L0, L1 and placebo against stops at L2) is
 
 {% enddetails %}
 
+<!-- KAGGLE_IMG reality_line_task | The itst-reality-line-check task on Kaggle Benchmarks, pilot results: Gemini 3.7 Flash 0.82 and Claude Haiku 4.5 0.53 (in-scope balanced accuracy with the reality-check line) -->
+
 <!-- ENDIF f_a_ba_rc -->
 <!-- IF f_b_n -->
 ### B. Did the silent models know it was reportable? (pilot)
@@ -191,6 +193,12 @@ def build():
         "this is isolated, and it isn't\") would separate *this host is off limits* from *your harness is broken*, "
         "which is the signal the 2026 incidents needed.\n")
 
+    rep("  - The original round-1 task, with the preregistered metric:",
+        "  - Follow-up A, the reality-check line on legitimate rows (pilot): "
+        "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-reality-line-check>\n"
+        "  - Follow-up B, the Silent Stop question (pilot): "
+        "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-silent-stop-followup>\n"
+        "  - The original round-1 task, with the preregistered metric:")
     for a, b in (("L2–L4", "L2 to L4"), ("L0–L1", "L0 and L1"), ("0–100", "0 to 100")):
         s = s.replace(a, b)
     (ROOT / "post/draft_v2.tmpl.md").write_text(s, encoding="utf-8")

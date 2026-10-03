@@ -18,5 +18,10 @@
     "url": "",
     "shot": "One round-2 run opened on Kaggle: the prompt and the model's JSON answer (clinic-portal L4 is best)",
     "where": "Try it on your favourite model, after the prompt"
+  },
+  "reality_line_task": {
+    "url": "",
+    "shot": "kaggle.com/benchmarks/tasks/soumyaexe/itst-reality-line-check: the follow-up A task page and its results",
+    "where": "Follow-ups, section A, after the per-model details"
   }
 }

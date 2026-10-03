@@ -328,6 +328,7 @@ def main():
     if A_CSV.exists():
         na, sa = exp_a(load_a(), v2)
         n.update(na)
+        A.SOURCE = "Source: Is This Still the Test? follow-up A (pilot), Kaggle Benchmarks. "
         fig_a(sa, OUT / "13_reality_line_cost.png")
         md += ["", "## A. Reality-check line on legitimate rows (pilot)", "", na["f_a_table"]]
     if B_CSV.exists():
