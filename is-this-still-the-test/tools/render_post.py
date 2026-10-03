@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+IF_RX = re.compile(r"<!-- IF (\w+) -->\n?(.*?)<!-- ENDIF \1 -->\n?", re.S)
+IFNOT_RX = re.compile(r"<!-- IFNOT (\w+) -->\n?(.*?)<!-- ENDIFNOT \1 -->\n?", re.S)
 
 
 def fmt(v):
@@ -40,15 +42,21 @@ def kaggle_images(text):
 
 def render(tmpl):
     nums = json.loads((ROOT / "figures/final/numbers.json").read_text(encoding="utf-8"))
-    pilot = ROOT / "figures/pilot/numbers.json"  # round-2 pilot, once it has run
-    if pilot.exists():
-        nums.update(json.loads(pilot.read_text(encoding="utf-8")))
+    for extra in ("figures/pilot/numbers.json", "figures/followup/numbers.json"):  # round-2 pilot, amendment 1
+        if (ROOT / extra).exists():
+            nums.update(json.loads((ROOT / extra).read_text(encoding="utf-8")))
     text = tmpl.read_text(encoding="utf-8")
+    # <!-- IF key --> ... <!-- ENDIF key --> keeps a block only once `key` has a value, so an experiment that
+    # has not run yet leaves no sentence behind instead of a guessed number; IFNOT is the reverse
+    text = IF_RX.sub(lambda m: m.group(2) if m.group(1) in nums else "", text)
+    text = IFNOT_RX.sub(lambda m: "" if m.group(1) in nums else m.group(2), text)
     missing = sorted({k for k in re.findall(r"\{\{(\w+)\}\}", text) if k not in nums})
     if missing:
         sys.exit(f"numbers.json has no value for: {', '.join(missing)}")
     out = re.sub(r"\{\{(\w+)\}\}", lambda m: fmt(nums[m.group(1)]), text)
     out = kaggle_images(out)
+    if "<!-- NO_DASHES -->\n" in out:  # a template that asks for no en/em dashes, values included
+        out = out.replace("<!-- NO_DASHES -->\n", "").replace("–", "-").replace("—", "-")
     dst = tmpl.with_name(tmpl.name.replace(".tmpl.md", ".md"))
     dst.write_text(out, encoding="utf-8")
     print(f"rendered {dst.relative_to(ROOT)} from {nums['runs']} complete runs ({nums['decisions']} decisions)")

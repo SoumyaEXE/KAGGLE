@@ -11,7 +11,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TASKS = {"reality-threshold": "results/round1", "reality-threshold-scorecard": "results/rerun",
-         "itst-round2-pilot": "results/pilot"}
+         "itst-round2-pilot": "results/pilot", "itst-reality-line-check": "results/followup_a",
+         "itst-silent-stop-followup": "results/followup_b"}
 
 
 def run(*cmd):
@@ -24,7 +25,8 @@ def sync_images():
     import shutil
     out = ROOT / "images/charts"
     out.mkdir(parents=True, exist_ok=True)
-    for src in [*(ROOT / "figures/final").glob("*.png"), *(ROOT / "figures/pilot").glob("*.png")]:
+    for src in [*(ROOT / "figures/final").glob("*.png"), *(ROOT / "figures/pilot").glob("*.png"),
+                *(ROOT / "figures/followup").glob("*.png")]:
         shutil.copy2(src, out / src.name)
 
 
@@ -43,7 +45,9 @@ def main():
     run("figures_final.py")
     if (ROOT / "results/pilot/all_runs_raw.csv").exists():
         run("analyze_pilot.py")
+        run("analyze_followups.py")  # amendment 1: gate (C) always; A and B once downloaded
     run("tools/render_post.py")
+    run("tools/render_post.py", "post/draft_v2.tmpl.md")
     sync_images()
     run("paper/build_paper.py")
     print("\nall refreshed: figures/final, post/dev_post_final.md, paper/main.pdf")
