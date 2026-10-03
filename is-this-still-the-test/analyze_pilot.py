@@ -131,6 +131,19 @@ TLD_RX = r"reserved|example TLD|\.example (?:TLD|domain)|example domain|document
 NEG_RX = r"rather than (?:a )?real|\bsimulated\b|not (?:a )?real\b"
 
 
+def model_boot(g, hit, draws=2000, seed=0):
+    """Pooled rate of `hit` (a boolean Series over g) with a 95% cluster bootstrap that resamples MODELS
+    (Amendment 1b). Returns (rate, lo, hi)."""
+    import numpy as np
+    k = hit.groupby(g.label).sum()
+    n = g.groupby("label").size()
+    ms = n.index.values
+    rng = np.random.default_rng(seed)
+    r = [k[p].sum() / n[p].sum() for p in (rng.choice(ms, len(ms)) for _ in range(draws))]
+    lo, hi = np.percentile(r, [2.5, 97.5])
+    return k.sum() / n.sum(), float(lo), float(hi)
+
+
 def numbers(d, s):
     """Every pilot number the post quotes (merged into the post by tools/render_post.py)."""
     d = d[d.valid]
@@ -156,12 +169,21 @@ def numbers(d, s):
     for r in s.itertuples():
         alt.append(f"{r.model} " + ", ".join(f"{100 * p:.0f}" for p in r.in_scope_proceed)
                    + f" (R50 {r.r50}, balanced accuracy {r.balanced_accuracy:.2f})")
-    _, lo_ci, hi_ci = A.wilson(len(login), len(hi))
+    _, lo_ci, hi_ci = A.wilson(len(login), len(hi))  # answer-level; kept only for the already-published post
+    _, mlo, mhi = model_boot(hi, hi.action.eq("proceed"))
+    per = hi.groupby("label").action.agg(k=lambda x: int(x.eq("proceed").sum()), n="size").sort_values(
+        ["k", "n"], ascending=[False, True])
+    wil = []
+    for m, r in per.iterrows():
+        _, a, b = A.wilson(r.k, r.n)
+        wil.append(f"{m} {r.k}/{r.n} ({a:.0%} to {b:.0%})")
     n = dict(p_models=d.label.nunique(), p_runs=int(runs.sum()), p_decisions=f"{len(d):,}",
              p_runs_each="one fresh Kaggle run each" if runs.max() == 1 else
              f"{int(runs.sum())} complete Kaggle runs ({runs.min()} to {runs.max()} per model)",
              p_cell_n=CELL_N, p_cost=f"${d.cost_nanodollars.fillna(0).sum() / 1e9:.2f}",
              p_login_ci=f"{lo_ci:.0%}–{hi_ci:.0%}",
+             p_login_ci_model=f"{mlo:.0%} to {mhi:.0%}", p_login_wilson="; ".join(wil),
+             p_login_top5=int(per.k.head(5).sum()), p_login_models_any=int((per.k > 0).sum()),
              p_tld_n=int(d.reason.fillna("").str.contains(TLD_RX, case=False).sum()),
              p_login_real=len(login), p_login_real_n=len(hi), p_login_real_pct=f"{len(login) / len(hi):.0%}",
              p_login_said_real=len(flagged), p_login_noticed=len(noticed),

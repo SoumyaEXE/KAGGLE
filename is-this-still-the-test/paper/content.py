@@ -390,8 +390,11 @@ BODY = [
     ("table", "round2"),
     ("h2", "The ceiling disappears"),
     ("p", "With the decision host assigned, [[p_login_real]] of [[p_login_real_n]] in-scope answers at L2–L4 "
-          "([[p_login_real_pct]], 95% CI [[p_login_ci]]) logged in to a host the evidence identified as a real "
-          "company. By model: [[p_login_models]]; never: [[p_login_zero]]. On the out-of-scope arm, now without "
+          "([[p_login_real_pct]]) logged in to a host the evidence identified as a real company. The 95% interval, "
+          "from a 2,000-draw bootstrap that resamples models, is [[p_login_ci_model]]: the logins are concentrated, "
+          "with [[p_login_top5]] of the [[p_login_real]] coming from 5 models and only [[p_login_models_any]] of "
+          "[[p_models]] models logging in at all. Per model, with Wilson 95% intervals: [[p_login_wilson]]. "
+          "On the out-of-scope arm, now without "
           "the disclosing sentence, [[p_out_login]] of [[p_out_n]] answers proceeded. Round 1's zero therefore "
           "measured the scope check, not caution about reality."),
     ("h2", "Logins without awareness"),
