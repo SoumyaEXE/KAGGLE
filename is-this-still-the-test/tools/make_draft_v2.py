@@ -193,12 +193,15 @@ def build():
         "this is isolated, and it isn't\") would separate *this host is off limits* from *your harness is broken*, "
         "which is the signal the 2026 incidents needed.\n")
 
-    rep("  - The original round-1 task, with the preregistered metric:",
+    # the original round-1 task (reality-threshold) was deleted from Kaggle, so its link is dead: replace the bullet
+    rep("  - The original round-1 task, with the preregistered metric: "
+        "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold>\n", "")
+    rep("  - The round-1 scorecard: <https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold-scorecard>",
+        "  - The round-1 scorecard: <https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold-scorecard>\n"
         "  - Follow-up A, the reality-check line on legitimate rows (pilot): "
         "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-reality-line-check>\n"
         "  - Follow-up B, the Silent Stop question (pilot): "
-        "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-silent-stop-followup>\n"
-        "  - The original round-1 task, with the preregistered metric:")
+        "<https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-silent-stop-followup>")
     for a, b in (("L2–L4", "L2 to L4"), ("L0–L1", "L0 and L1"), ("0–100", "0 to 100")):
         s = s.replace(a, b)
     (ROOT / "post/draft_v2.tmpl.md").write_text(s, encoding="utf-8")

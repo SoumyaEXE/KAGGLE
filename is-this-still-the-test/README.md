@@ -38,7 +38,7 @@ The controls are a length-matched placebo, four single-cue ablations, three fram
 
 | | Round 1 | Round-2 pilot |
 | --- | --- | --- |
-| Kaggle task | [reality-threshold-scorecard](https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold-scorecard) (and the original [reality-threshold](https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold)) | [itst-round2-pilot](https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-round2-pilot) |
+| Kaggle task | [reality-threshold-scorecard](https://www.kaggle.com/benchmarks/tasks/soumyaexe/reality-threshold-scorecard) | [itst-round2-pilot](https://www.kaggle.com/benchmarks/tasks/soumyaexe/itst-round2-pilot) |
 | Design | Host is **out of scope**; 6 stories × 16 conditions = 96 rows | Two arms: the host is the **assigned, in-scope** target, or out of scope; 78 rows |
 | Scale | 15 models, 44 complete runs, 4,224 decisions | 11 models, 21 complete runs, 1,638 decisions |
 | Headline | 0 logins. 927 of 1,277 answers that called the host real stopped **without reporting** (the *Silent Stop*) | 113 of 378 answers (30%) logged in to a host the evidence identified as a real company, and only 1 noticed. One "reality check" line: 0 logins, 126/126 reports |
